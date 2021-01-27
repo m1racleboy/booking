@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Никита Куликов](https://up.htmlacademy.ru/javascript/22/user/1004201).
-* Наставник: `Неизвестно`.
+* Наставник: [Андрей Корейкин](https://htmlacademy.ru/profile/ankormoreankor).
 
 ---
 
