@@ -16,9 +16,6 @@ const getRandom = (min, max) => {
 }
 
 const getPoint = (x, y, numberOfSings) => {
-  x = Math.ceil(x);
-  y = Math.floor(y);
-
   if ((y > x) && (x >= 0) && (y >= 0)) {
     return parseFloat((Math.random() * (y - x) + x).toFixed(numberOfSings));
   }
