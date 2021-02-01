@@ -1,16 +1,20 @@
 'use strict'
 
+const reportMessage = () => {
+  alert('Некорректный ввод');
+  return 0;
+};
+
 const getRandom = (min, max) => {
   min = +min;
   max = +max;
 
-  if ((max >= min) && (min >= 0) && (max >= 0)) {
+  if ((max >= min) && (min >= 0) && (max > 0)) {
     return Math.random() * (max - min) + min;
   }
 
   else {
-    alert('Некорректный ввод');
-    return 0;
+    return reportMessage();
   }
 
 }
@@ -18,16 +22,8 @@ const getRandom = (min, max) => {
 const getPoint = (x, y, numberOfSings) => {
   let result = getRandom(x, y);
   numberOfSings = +numberOfSings;
-
-  if (numberOfSings >= 0) {
-    return +result.toFixed(numberOfSings);
-  }
-
-  else {
-    alert('Некорректный ввод');
-    return 0;
-  }
-
+  numberOfSings >= 0 ? result = +result.toFixed(numberOfSings) : result = reportMessage();
+  return result;
 }
 
-getPoint(1, 48, 8);
+getPoint(12, 23, 3);
