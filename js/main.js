@@ -22,7 +22,7 @@ const getRandom = (min, max) => {
 const getPoint = (x, y, numberOfSings) => {
   let result = getRandom(x, y);
   numberOfSings = +numberOfSings;
-  numberOfSings >= 0 ? result = +result.toFixed(numberOfSings) : result = reportMessage();
+  result = numberOfSings >= 0 ? +result.toFixed(numberOfSings) : reportMessage();
   return result;
 }
 
