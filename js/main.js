@@ -1,16 +1,5 @@
 'use strict'
 
-const TITLES = [
-  'Заголовок - 1',
-  'Заголовок - 2',
-  'Заголовок - 3',
-  'Заголовок - 4',
-  'Заголовок - 5',
-  'Заголовок - 6',
-  'Заголовок - 7',
-  'Заголовок - 8',
-];
-
 const TYPES = [
   'palace',
   'flat',
@@ -51,12 +40,9 @@ const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
-const sendReport = () => {
-  alert('Некорректный ввод');
-  return 0;
-};
+const numberOfObjects = 10;
 
-const getRandom = (min, max) => {
+const getRandomNumber = (min, max) => {
   min = +min;
   max = +max;
 
@@ -65,50 +51,38 @@ const getRandom = (min, max) => {
   }
 
   else {
-    return sendReport();
+    return 0;
   }
 
 }
 
 const getPoint = (x, y, numberOfSings = 0) => {
-  let result = getRandom(x, y);
+  let result = getRandomNumber(x, y);
   numberOfSings = +numberOfSings;
-  result = numberOfSings >= 0 ? +result.toFixed(numberOfSings) : sendReport();
+  result = numberOfSings >= 0 ? +result.toFixed(numberOfSings) : 0;
   return result;
 }
 
 const getRandomArrayElement = (elements) => {
-  return elements[Math.round(getRandom(0, elements.length - 1))];
+  return elements[~~getRandomNumber(0, elements.length - 1)];
 };
 
-const createAuthor = () => {
-  return {
-    avatar: `img/avatars/user0${Math.round(getRandom(0, 9))}.png`,
-  }
-}
-
-const createOffer = (locationNumber) => {
+const createOffer = (x, y) => {
   let featureItems = [];
 
-  for (let i = 0; i < Math.round(getRandom(1, 7)); i++) {
+  for (let i = 0; i < ~~getRandomNumber(1, 7); i++) {
     featureItems[i] = getRandomArrayElement(FEATURES);
   }
 
-  for (let i = 0; i < featureItems.length; i++) {
-    for (let j = 0; j < i; j++) {
-      if (featureItems[i] === featureItems[j]) {
-        featureItems.splice(j, 1);
-      }
-    }
-  }
+  featureItems = [... new Set(featureItems)];
 
   return {
-    title: getRandomArrayElement(TITLES),
-    address: `Координата по x: ${LOCATIONS[locationNumber].x} Координата по y: ${LOCATIONS[locationNumber].y}`,
-    price: Math.round(getRandom(8000, 100000)),
+    title: `Заголовок - ${~~getRandomNumber(1, 10)}`,
+    address: `Координата по x: ${x} Координата по y: ${y}`,
+    price: ~~getRandomNumber(2000, 10000),
     type: getRandomArrayElement(TYPES),
-    rooms: Math.round(getRandom(1, 3)),
-    guests: Math.round(getRandom(4, 20)),
+    rooms: ~~getRandomNumber(1, 3),
+    guests: ~~getRandomNumber(4, 20),
     checkin: getRandomArrayElement(CHECKINS),
     checkout: getRandomArrayElement(CHECKOUTS),
     features: featureItems,
@@ -119,27 +93,24 @@ const createOffer = (locationNumber) => {
 
 const createLocation = () => {
   return {
-    x: getPoint(35.65000, 35.70000, 5),
-    y: getPoint(139.70000, 139.80000, 5),
+    x: getPoint(35.65, 35.7, 5),
+    y: getPoint(139.7, 139.8, 5),
   }
 }
 
-const LOCATIONS = [];
-
-for (let i = 0; i < 10; i++) {
-  LOCATIONS[i] = createLocation();
-}
-
-const returnObject = () => {
+const returnObjectAd = () => {
   let objArray = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < numberOfObjects; i++) {
+    let location = createLocation();
     objArray[i] = {
-      author: createAuthor(),
-      offer: createOffer(i),
-      location: LOCATIONS[i],
+      author: {
+        avatar: `img/avatars/user0${~~getRandomNumber(0, 9)}.png`,
+      },
+      offer: createOffer(location.x, location.y),
+      location: location,
     }
   }
   return objArray;
 }
 
-returnObject();
+returnObjectAd();
