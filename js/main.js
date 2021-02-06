@@ -68,7 +68,7 @@ const getRandomArrayElement = (elements) => {
 const getFeaturesArray = () => {
   let featureItems = [];
 
-  for (let i = 0; i < Math.round(getRandomNumber(1, 7)); i++) {
+  for (let i = 0; i < ~~getRandomNumber(1, 7); i++) {
     featureItems[i] = getRandomArrayElement(FEATURES);
   }
 
@@ -88,7 +88,7 @@ const getFeaturesArray = () => {
   return featureItems;
 };
 
-const createOffer = (location) => {
+const getOffer = (location) => {
   return {
     title: `Заголовок - ${~~getRandomNumber(1, 10)}`,
     address: `Координата по x: ${location.x} Координата по y: ${location.y}`,
@@ -104,26 +104,26 @@ const createOffer = (location) => {
   }
 };
 
-const createLocation = () => {
+const getLocation = () => {
   return {
     x: getPoint(35.65, 35.7, 5),
     y: getPoint(139.7, 139.8, 5),
   }
 };
 
-const returnMockData = () => {
+const getMockData = () => {
   let objArray = [];
   for (let i = 0; i < NUMBER_OF_OBJECTS; i++) {
-    let location = createLocation();
+    let location = getLocation();
     objArray[i] = {
       author: {
         avatar: `img/avatars/user0${~~getRandomNumber(0, 9)}.png`,
       },
-      offer: createOffer(location),
+      offer: getOffer(location),
       location: location,
     }
   }
   return objArray;
 };
 
-returnMockData();
+getMockData();
