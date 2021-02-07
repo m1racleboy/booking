@@ -72,7 +72,7 @@ const getRandomArrayElement = (elements) => {
 const getRandomArray = (array, length) => {
   const arrayCopy = [...array];
   for (let i = 0; i < (array.length - length); i++) {
-    arrayCopy.splice(~~getRandomNumber(0, arrayCopy.length), 1)
+    arrayCopy.splice(getRoundNumber(0, arrayCopy.length), 1)
   }
   return arrayCopy;
 }
