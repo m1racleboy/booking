@@ -87,7 +87,7 @@ const getOffer = (location) => {
     guests: getRoundNumber(4, 20),
     checkin: getRandomArrayElement(CHECKINS),
     checkout: getRandomArrayElement(CHECKOUTS),
-    features: getRandomArray(FEATURES, getRandomNumber(1, 7)),
+    features: getRandomArray(FEATURES, getRoundNumber(1, 7)),
     description: getRandomArrayElement(DESCRIPTIONS),
     photos: getRandomArrayElement(PHOTOS),
   }
