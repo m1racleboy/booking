@@ -54,6 +54,10 @@ const getRandomNumber = (min, max) => {
   }
 };
 
+const getRoundNumber = (min, max) => {
+  return Math.round(getRandomNumber(min, max));
+}
+
 const getPoint = (x, y, numberOfSings = 0) => {
   let result = getRandomNumber(x, y);
   numberOfSings = +numberOfSings;
@@ -62,43 +66,28 @@ const getPoint = (x, y, numberOfSings = 0) => {
 };
 
 const getRandomArrayElement = (elements) => {
-  return elements[~~getRandomNumber(0, elements.length)];
+  return elements[getRoundNumber(0, elements.length)];
 };
 
-const getFeaturesArray = () => {
-  let featureItems = [];
-
-  for (let i = 0; i < ~~getRandomNumber(1, 7); i++) {
-    featureItems[i] = getRandomArrayElement(FEATURES);
+const getRandomFeatures = (array, length) => {
+  const FEATURES_COPY = [...array];
+  for (let i = 0; i < (array.length - length); i++) {
+    FEATURES_COPY.splice(getRoundNumber(0, FEATURES_COPY.length), 1);
   }
-
-  featureItems.sort();
-
-  for (let i = 0; i < featureItems.length; i++) {
-    let count = 0;
-    for (let j = i + 1; j < featureItems.length; j++) {
-      if (featureItems[i] === featureItems[j]) {
-        count++;
-      }
-    }
-    if (count > 0) {
-      featureItems.splice(i + 1, count);
-    }
-  }
-  return featureItems;
-};
+  return FEATURES_COPY;
+}
 
 const getOffer = (location) => {
   return {
-    title: `Заголовок - ${~~getRandomNumber(1, 10)}`,
+    title: `Заголовок - ${getRoundNumber(1, 10)}`,
     address: `Координата по x: ${location.x} Координата по y: ${location.y}`,
-    price: ~~getRandomNumber(2000, 10000),
+    price: getRoundNumber(2000, 10000),
     type: getRandomArrayElement(TYPES),
-    rooms: ~~getRandomNumber(1, 3),
-    guests: ~~getRandomNumber(4, 20),
+    rooms: getRoundNumber(1, 4),
+    guests: getRoundNumber(4, 20),
     checkin: getRandomArrayElement(CHECKINS),
     checkout: getRandomArrayElement(CHECKOUTS),
-    features: getFeaturesArray(),
+    features: getRandomFeatures(FEATURES, getRandomNumber(1, 7)),
     description: getRandomArrayElement(DESCRIPTIONS),
     photos: getRandomArrayElement(PHOTOS),
   }
@@ -117,7 +106,7 @@ const getMockData = () => {
     let location = getLocation();
     objArray[i] = {
       author: {
-        avatar: `img/avatars/user0${~~getRandomNumber(0, 9)}.png`,
+        avatar: `img/avatars/user0${getRoundNumber(0, 9)}.png`,
       },
       offer: getOffer(location),
       location: location,
