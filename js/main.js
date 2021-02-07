@@ -69,12 +69,12 @@ const getRandomArrayElement = (elements) => {
   return elements[getRoundNumber(0, elements.length)];
 };
 
-const getRandomFeatures = (array, length) => {
-  const FEATURES_COPY = [...array];
+const getRandomArray = (array, length) => {
+  const arrayCopy = [...array];
   for (let i = 0; i < (array.length - length); i++) {
-    FEATURES_COPY.splice(getRoundNumber(0, FEATURES_COPY.length), 1);
+    arrayCopy.splice(~~getRandomNumber(0, arrayCopy.length), 1)
   }
-  return FEATURES_COPY;
+  return arrayCopy;
 }
 
 const getOffer = (location) => {
@@ -87,7 +87,7 @@ const getOffer = (location) => {
     guests: getRoundNumber(4, 20),
     checkin: getRandomArrayElement(CHECKINS),
     checkout: getRandomArrayElement(CHECKOUTS),
-    features: getRandomFeatures(FEATURES, getRandomNumber(1, 7)),
+    features: getRandomArray(FEATURES, getRandomNumber(1, 7)),
     description: getRandomArrayElement(DESCRIPTIONS),
     photos: getRandomArrayElement(PHOTOS),
   }
