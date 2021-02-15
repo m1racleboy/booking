@@ -21,16 +21,4 @@ const getPoint = (x, y, numberOfSings = 0) => {
   return result;
 };
 
-const getRandomArrayElement = (elements) => {
-  return elements[getRoundNumber(0, elements.length)];
-};
-
-const getRandomArray = (array, length) => {
-  const arrayCopy = [...array];
-  for (let i = 0; i < (array.length - length); i++) {
-    arrayCopy.splice(getRoundNumber(0, arrayCopy.length), 1)
-  }
-  return arrayCopy;
-}
-
-export {getRoundNumber, getPoint, getRandomArrayElement, getRandomArray};
+export { getRoundNumber, getPoint };
