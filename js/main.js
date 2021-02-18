@@ -1,3 +1,2 @@
-import { getMockData } from './mock.js';
-
-getMockData();
+import './mock.js';
+import './create-card.js';

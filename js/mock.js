@@ -1,7 +1,7 @@
-import { getRoundNumber, getPoint } from './util.js';
+import { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray } from './util.js';
 import { MIN_ELEMENTS, MIN_POSITIVE_NUMBER, COUNT_OF_MOCKS, MIN_LOCATION_X, MIN_LOCATION_Y,
   MAX_LOCATION_X, MAX_LOCATION_Y, MIN_PRICE, MAX_PRICE, MAX_GUESTS, MAX_ROOMS,
-  MAX_COUNT_OF_AVATARS, MAX_COUNT_OF_DECIMAL_NUMBERS, MAX_FEATURES } from './constant.js'
+  MAX_COUNT_OF_AVATARS, MAX_COUNT_OF_DECIMAL_NUMBERS, MAX_FEATURES, MAX_PHOTOS } from './constant.js'
 
 
 const TYPES = [
@@ -44,18 +44,6 @@ const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
-const getRandomArrayElement = (elements) => {
-  return elements[getRoundNumber(MIN_POSITIVE_NUMBER, elements.length)];
-};
-
-const getRandomArray = (array, length) => {
-  const arrayCopy = [...array];
-  for (let i = MIN_POSITIVE_NUMBER; i < (array.length - length); i++) {
-    arrayCopy.splice(getRoundNumber(MIN_POSITIVE_NUMBER, arrayCopy.length), MIN_ELEMENTS)
-  }
-  return arrayCopy;
-}
-
 const getOffer = (location) => {
   return {
     title: `Заголовок - ${getRoundNumber(MIN_ELEMENTS, COUNT_OF_MOCKS)}`,
@@ -68,7 +56,7 @@ const getOffer = (location) => {
     checkout: getRandomArrayElement(CHECKOUTS),
     features: getRandomArray(FEATURES, getRoundNumber(MIN_ELEMENTS, MAX_FEATURES)),
     description: getRandomArrayElement(DESCRIPTIONS),
-    photos: getRandomArrayElement(PHOTOS),
+    photos: getRandomArray(PHOTOS, getRoundNumber(MIN_ELEMENTS, MAX_PHOTOS)),
   }
 };
 
@@ -93,5 +81,7 @@ const getMockData = () => {
   }
   return objArray;
 };
+
+console.log(getMockData());
 
 export { getMockData };
