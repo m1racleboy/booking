@@ -1,3 +1,5 @@
+import { MIN_ELEMENTS } from './constant.js';
+
 const getRandomNumber = (min, max) => {
   min = +min;
   max = +max;
@@ -21,4 +23,16 @@ const getPoint = (x, y, numberOfSings = 0) => {
   return result;
 };
 
-export { getRoundNumber, getPoint };
+const getRandomArrayElement = (elements) => {
+  return elements[getRoundNumber(0, elements.length - 1)];
+};
+
+const getRandomArray = (array, length) => {
+  const arrayCopy = [...array];
+  for (let i = 0; i < (array.length - length); i++) {
+    arrayCopy.splice(getRoundNumber(0, arrayCopy.length), MIN_ELEMENTS)
+  }
+  return arrayCopy;
+}
+
+export { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray };
