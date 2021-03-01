@@ -12,9 +12,6 @@ const similarCardTemplate = document.querySelector('#card').content.querySelecto
 const similarOfferList = document.querySelector('#map-canvas');
 const similarCards = getMockData();
 const nodes = Array.from(similarCardTemplate.children);
-similarOfferList.insertAdjacentHTML('beforeend',
-  '<article class="popup"></article>');
-const offerElement = similarOfferList.querySelector('.popup');
 
 const getSimpleStructure = (currentOffer) => {
   delete currentOffer.location.x;
@@ -78,7 +75,8 @@ const createOffer = (currentOffer) => {
 
     node.src = value;
 
-    offerElement.appendChild(node);
+    similarCardTemplate.appendChild(node);
+    similarOfferList.appendChild(similarCardTemplate);
   });
 }
 

@@ -12,7 +12,7 @@ const MIN_PRICE = 0;
 const MAX_PRICE = 1000000;
 
 const MAX_GUESTS = 4;
-const MAX_ROOMS = 7;
+const MAX_ROOMS = 4;
 const MAX_COUNT_OF_AVATARS = 8;
 const MAX_COUNT_OF_DECIMAL_NUMBERS = 5;
 const MAX_FEATURES = 6;

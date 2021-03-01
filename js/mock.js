@@ -70,7 +70,7 @@ const getLocation = () => {
 };
 
 function checkCapacity(guests, rooms) {
-  let str = '';
+  let str = `${rooms} комнат для `;
 
   if (rooms === 1) {
     str = `${rooms} комната для `;
@@ -78,16 +78,12 @@ function checkCapacity(guests, rooms) {
   else if (rooms > 1 && rooms < 5) {
     str = `${rooms} комнаты для `;
   }
-  else {
-    str = `${rooms} комнат для `;
-  }
 
   if (guests === 1) {
     return str + `${guests} гостя`;
   }
-  else {
-    return str + `${guests} гостей`;
-  }
+
+  return str + `${guests} гостей`;
 }
 
 const getExtended = (offer) => {
