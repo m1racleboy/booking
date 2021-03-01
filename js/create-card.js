@@ -1,80 +1,85 @@
 import { getMockData } from './mock.js';
+import { getRoundNumber } from './util.js';
+
+const HOUSE_TYPES = {
+  palace: 'Дворец',
+  house: 'Дом',
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+};
 
 const similarCardTemplate = document.querySelector('#card').content.querySelector('.popup');
 const similarOfferList = document.querySelector('#map-canvas');
 const similarCards = getMockData();
+const nodes = Array.from(similarCardTemplate.children);
+similarOfferList.insertAdjacentHTML('beforeend',
+  '<article class="popup"></article>');
+const offerElement = similarOfferList.querySelector('.popup');
 
-const similarCardFragment = document.createDocumentFragment();
+const getSimpleStructure = (currentOffer) => {
+  delete currentOffer.location.x;
+  delete currentOffer.location.y;
+  delete currentOffer.offer.guests;
+  delete currentOffer.offer.rooms;
+  delete currentOffer.offer.checkin;
+  delete currentOffer.offer.checkout;
+  const { author, offer, point, extended } = currentOffer;
+  const simpleObj = Object.assign({}, author, offer, point, extended);
+  return simpleObj;
+}
 
-const insertImages = (photos, photoElement) => {
+const renderPhotos = (photos, photoElement) => {
+  photoElement.textContent = '';
   photos.forEach((item) => {
     photoElement.insertAdjacentHTML('beforeend',
-      `<img src=${item} class="popup__photo" width="50" height="50" alt="Фотография жилья"></img>`)
+      `<img src=${item} class="popup__photo" width="50" height="50" alt="Фотография жилья"></img>`);
   });
 }
 
-const checkCapacity = (guests, rooms) => {
-  let str = '';
-
-  if (rooms === 1) str = `${rooms} комната для `;
-  else if (rooms > 1 && rooms < 5) str = `${rooms} комнаты для `;
-  else str = `${rooms} комнат для `;
-
-  if (guests === 1) return str + `${guests} гостя`;
-  else return str + `${guests} гостей`;
+const renderFeatures = (features, featureElement) => {
+  featureElement.textContent = '';
+  features.forEach((item) => {
+    featureElement.insertAdjacentHTML('beforeend',
+      `<li class="popup__feature popup__feature--${item}"></li>`);
+  });
 }
 
-const appendFeatures = () => {
-  //todo добавлять лишки через аппендчайилд
+const currentOffer = similarCards[getRoundNumber(0, 9)];
+
+const createOffer = (currentOffer) => {
+  const offer = getSimpleStructure(currentOffer);
+  const keys = Object.keys(offer);
+  const classes = nodes.map(item => item.classList.value);
+  classes.forEach((item, i) => {
+
+    const key = keys.find(key => item.includes(key));
+    const value = offer[key];
+    const node = nodes[i];
+
+    if (!key || !value || value.length === 0) {
+      node.classList.add('hidden');
+    }
+
+    if (!Array.isArray(value) && key !== 'avatar') {
+      node.textContent = value;
+    }
+
+    if (key === 'features') {
+      renderFeatures(value, node);
+    }
+
+    if (key === 'photos') {
+      renderPhotos(value, node);
+    }
+
+    if (key === 'type') {
+      node.textContent = HOUSE_TYPES[value];
+    }
+
+    node.src = value;
+
+    offerElement.appendChild(node);
+  });
 }
 
-const checkType = (type) => {
-
-  switch (type) {
-    case 'palace':
-      return 'Дворец';
-      break;
-    case 'house':
-      return 'Дом';
-      break;
-    case 'flat':
-      return 'Квартира';
-      break;
-    case 'bungalow':
-      return 'Бунгало';
-      break;
-  }
-}
-
-similarCards.forEach((deal) => {
-  const cardElement = similarCardTemplate.cloneNode(true);
-  if (deal.offer.title == "") {
-    cardElement.querySelector('.popup__title').classList.add('hidden');
-  }
-  else {
-    cardElement.querySelector('.popup__title').textContent = deal.offer.title;
-  }
-  if (deal.offer.address == "") {
-    cardElement.querySelector('.popup__text--address').classList.add('hidden')
-  }
-  else {
-    cardElement.querySelector('.popup__text--address').textContent = deal.offer.address;
-  }
-  cardElement.querySelector('.popup__text--price').textContent = `${deal.offer.price} ₽/ночь`;
-  cardElement.querySelector('.popup__type').textContent = checkType(deal.offer.type);
-  cardElement.querySelector('.popup__text--capacity').textContent = checkCapacity(deal.offer.guests, deal.offer.rooms);
-  cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${deal.offer.checkin}, выезд до ${deal.offer.checkout}`;
-  cardElement.querySelector('.popup__features').textContent = deal.offer.features;
-  cardElement.querySelector('.popup__description').textContent = deal.offer.description;
-  let photoElement = cardElement.querySelector('.popup__photos');
-  let photoElementChild = cardElement.querySelector('.popup__photo');
-  // коммент для пояснения заранее, после замечаний удалю, удаляю появляющийся img из src = 'inknown',
-  // не придумал, как по-другому от него избавиться
-  photoElement.removeChild(photoElementChild);
-  insertImages(deal.offer.photos, photoElement);
-
-  cardElement.querySelector('.popup__avatar').src = deal.author.avatar;
-  similarCardFragment.appendChild(cardElement);
-});
-console.log(similarCardFragment);
-similarOfferList.appendChild(similarCardFragment);
+createOffer(currentOffer);

@@ -1,7 +1,9 @@
 import { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray } from './util.js';
-import { MIN_ELEMENTS, MIN_POSITIVE_NUMBER, COUNT_OF_MOCKS, MIN_LOCATION_X, MIN_LOCATION_Y,
+import {
+  MIN_ELEMENTS, MIN_POSITIVE_NUMBER, COUNT_OF_MOCKS, MIN_LOCATION_X, MIN_LOCATION_Y,
   MAX_LOCATION_X, MAX_LOCATION_Y, MIN_PRICE, MAX_PRICE, MAX_GUESTS, MAX_ROOMS,
-  MAX_COUNT_OF_AVATARS, MAX_COUNT_OF_DECIMAL_NUMBERS, MAX_FEATURES, MAX_PHOTOS } from './constant.js'
+  MAX_COUNT_OF_AVATARS, MAX_COUNT_OF_DECIMAL_NUMBERS, MAX_FEATURES, MAX_PHOTOS
+} from './constant.js'
 
 
 const TYPES = [
@@ -67,21 +69,49 @@ const getLocation = () => {
   }
 };
 
+function checkCapacity(guests, rooms) {
+  let str = '';
+
+  if (rooms === 1) {
+    str = `${rooms} комната для `;
+  }
+  else if (rooms > 1 && rooms < 5) {
+    str = `${rooms} комнаты для `;
+  }
+  else {
+    str = `${rooms} комнат для `;
+  }
+
+  if (guests === 1) {
+    return str + `${guests} гостя`;
+  }
+  else {
+    return str + `${guests} гостей`;
+  }
+}
+
+const getExtended = (offer) => {
+  return {
+    capacity: checkCapacity(offer.guests, offer.rooms),
+    time: `Заезд после ${offer.checkin}, выезд после ${offer.checkout}`,
+  }
+};
+
 const getMockData = () => {
   let objArray = [];
   for (let i = MIN_POSITIVE_NUMBER; i < COUNT_OF_MOCKS; i++) {
     let location = getLocation();
+    let offer = getOffer(location);
     objArray[i] = {
       author: {
         avatar: `img/avatars/user0${getRoundNumber(MIN_ELEMENTS, MAX_COUNT_OF_AVATARS)}.png`,
       },
-      offer: getOffer(location),
+      offer: offer,
       location: location,
+      extended: getExtended(offer),
     }
   }
   return objArray;
 };
-
-console.log(getMockData());
 
 export { getMockData };

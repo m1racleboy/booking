@@ -24,7 +24,7 @@ const getPoint = (x, y, numberOfSings = 0) => {
 };
 
 const getRandomArrayElement = (elements) => {
-  return elements[getRoundNumber(0, elements.length)];
+  return elements[getRoundNumber(0, elements.length - 1)];
 };
 
 const getRandomArray = (array, length) => {
