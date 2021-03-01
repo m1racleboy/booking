@@ -8,28 +8,34 @@ const HOUSE_TYPES = {
   bungalow: 'Бунгало',
 };
 
-const similarCardTemplate = document.querySelector('#card').content.querySelector('.popup');
+const fields = [
+  'x',
+  'y',
+  'guests',
+  'rooms',
+  'checkin',
+  'checkout',
+];
+
+const popup = document.querySelector('#card').content.querySelector('.popup').cloneNode(true);
 const similarOfferList = document.querySelector('#map-canvas');
 const similarCards = getMockData();
-const nodes = Array.from(similarCardTemplate.children);
+const nodes = Array.from(popup.children);
+similarOfferList.appendChild(popup);
+popup.classList.add('hidden');
 
 const getSimpleStructure = (currentOffer) => {
-  delete currentOffer.location.x;
-  delete currentOffer.location.y;
-  delete currentOffer.offer.guests;
-  delete currentOffer.offer.rooms;
-  delete currentOffer.offer.checkin;
-  delete currentOffer.offer.checkout;
-  const { author, offer, point, extended } = currentOffer;
-  const simpleObj = Object.assign({}, author, offer, point, extended);
-  return simpleObj;
+  const { author, offer, location, extended } = currentOffer;
+  currentOffer = Object.assign({}, author, offer, location, extended);
+  fields.forEach(field => delete currentOffer[field]);
+  return currentOffer;
 }
 
 const renderPhotos = (photos, photoElement) => {
   photoElement.textContent = '';
   photos.forEach((item) => {
     photoElement.insertAdjacentHTML('beforeend',
-      `<img src=${item} class="popup__photo" width="50" height="50" alt="Фотография жилья"></img>`);
+      `<img src=${item} class="popup__photo" width="50" height="50" alt="Фотография жилья">`);
   });
 }
 
@@ -74,10 +80,8 @@ const createOffer = (currentOffer) => {
     }
 
     node.src = value;
-
-    similarCardTemplate.appendChild(node);
-    similarOfferList.appendChild(similarCardTemplate);
   });
+  popup.classList.remove('hidden');
 }
 
 createOffer(currentOffer);
