@@ -1,8 +1,7 @@
 import { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray } from './util.js';
 import {
   MIN_ELEMENTS, MIN_POSITIVE_NUMBER, COUNT_OF_MOCKS, MIN_LOCATION_X, MIN_LOCATION_Y,
-  MAX_LOCATION_X, MAX_LOCATION_Y, MIN_PRICE, MAX_PRICE, MAX_GUESTS, MAX_ROOMS,
-  MAX_COUNT_OF_AVATARS, MAX_COUNT_OF_DECIMAL_NUMBERS, MAX_FEATURES, MAX_PHOTOS
+  MAX_LOCATION_X, MAX_LOCATION_Y, MAX_PRICE, MAX_COUNT_OF_AVATARS, MAX_COUNT_OF_DECIMAL_NUMBERS, MAX_FEATURES, MAX_PHOTOS
 } from './constant.js'
 
 
@@ -13,17 +12,7 @@ const TYPES = [
   'bungalow',
 ];
 
-const CHECKINS = [
-  '12:00',
-  '13:00',
-  '14:00',
-];
-
-const CHECKOUTS = [
-  '12:00',
-  '13:00',
-  '14:00',
-];
+const TIME = `${getRoundNumber(12, 14)}:00`;
 
 const FEATURES = [
   'wifi',
@@ -46,15 +35,18 @@ const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
+const ROOMS = [1, 2, 3, 100];
+const GUESTS = [1, 2, 3, 'не для гостей'];
+
 const getOffer = (location) => ({
   title: `Заголовок - ${getRoundNumber(MIN_ELEMENTS, COUNT_OF_MOCKS)}`,
   address: `Координата по x: ${location.x} Координата по y: ${location.y}`,
-  price: getRoundNumber(MIN_PRICE, MAX_PRICE),
+  price: getRoundNumber(0, MAX_PRICE),
   type: getRandomArrayElement(TYPES),
-  rooms: getRoundNumber(MIN_ELEMENTS, MAX_ROOMS),
-  guests: getRoundNumber(MIN_ELEMENTS, MAX_GUESTS),
-  checkin: getRandomArrayElement(CHECKINS),
-  checkout: getRandomArrayElement(CHECKOUTS),
+  rooms: getRandomArrayElement(ROOMS),
+  guests: 0,
+  checkin: TIME,
+  checkout: TIME,
   features: getRandomArray(FEATURES, getRoundNumber(MIN_ELEMENTS, MAX_FEATURES)),
   description: getRandomArrayElement(DESCRIPTIONS),
   photos: getRandomArray(PHOTOS, getRoundNumber(MIN_ELEMENTS, MAX_PHOTOS)),
@@ -65,19 +57,22 @@ const getLocation = () => ({
   y: getPoint(MIN_LOCATION_Y, MAX_LOCATION_Y, MAX_COUNT_OF_DECIMAL_NUMBERS),
 });
 
-function checkCapacity(guests, rooms) {
-  let str = `${rooms} комнат для `;
+function getCapacity(guests, rooms) {
+  if (typeof guests === 'number') {
+    let str = `${rooms} комнат для `;
 
-  if (rooms <= 5) {
-    str = `${rooms} ${rooms === 1 ? 'комната' : 'комнаты'} для `;
+    if (rooms <= 5) {
+      str = `${rooms} ${rooms === 1 ? 'комната' : 'комнаты'} для `;
+    }
+
+    return str + `${guests} ${guests === 1 ? 'гостя' : 'гостей'}`;
   }
-
-  return str + `${guests} ${guests === 1 ? 'гостя' : 'гостей'}`;
+  return `${rooms} комнат не для гостей`;
 }
 
 const getExtended = (offer) => ({
-  time: `Заезд после ${offer.checkin}, выезд после ${offer.checkout}`,
-  capacity: checkCapacity(offer.guests, offer.rooms),
+  time: `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`,
+  capacity: getCapacity(offer.guests, offer.rooms),
 });
 
 const getMockData = () => {
@@ -91,10 +86,23 @@ const getMockData = () => {
       },
       offer: offer,
       location: location,
-      extended: getExtended(offer),
+    }
+
+    objArray[i].offer.rooms === 100 ? objArray[i].offer.guests = GUESTS[GUESTS.length - 1]
+      : objArray[i].offer.guests = getRoundNumber(1, objArray[i].offer.rooms);
+
+    objArray[i].extended = getExtended(offer);
+
+    if (objArray[i].offer.type === 'flat') {
+      objArray[i].offer.price = getRoundNumber(1000, MAX_PRICE);
+    }
+    else if (objArray[i].offer.type === 'house') {
+      objArray[i].offer.price = getRoundNumber(5000, MAX_PRICE);
+    }
+    else if (objArray[i].offer.type === 'palace') {
+      objArray[i].offer.price = getRoundNumber(10000, MAX_PRICE);
     }
   }
   return objArray;
 };
-
 export { getMockData };
