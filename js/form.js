@@ -2,21 +2,35 @@ import { MIN_PRICE } from './mock.js';
 
 const typeField = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
+const form = document.querySelector('.ad-form');
+const checkin = document.querySelector('#timein');
+const checkout = document.querySelector('#timeout');
 
-typeField.addEventListener('change', (e) => {
+const typeFieldHandler = (e) => {
   const price = MIN_PRICE[e.target.value];
   priceInput.min = price;
   priceInput.value = price;
   priceInput.placeholder = price;
-});
+};
 
-const checkin = document.querySelector('#timein');
-const checkout = document.querySelector('#timeout');
-
-checkin.addEventListener('change', (e) => {
+const checkinFieldHandler = (e) => {
   checkout.value = e.target.value;
-});
+}
 
-checkout.addEventListener('change', (e) => {
+const checkoutFieldHandler = (e) => {
   checkin.value = e.target.value;
+}
+
+form.addEventListener('change', (e) => {
+  if (e.target === typeField) {
+    typeFieldHandler(e);
+  }
+
+  if (e.target === checkin) {
+    checkinFieldHandler(e);
+  }
+
+  if (e.target === checkout) {
+    checkoutFieldHandler(e);
+  }
 });
