@@ -8,7 +8,7 @@ const HOUSE_TYPES = {
   bungalow: 'Бунгало',
 };
 
-const FIELDS = [
+const fields = [
   'x',
   'y',
   'guests',
@@ -27,7 +27,7 @@ popup.classList.add('hidden');
 const getSimpleStructure = (currentOffer) => {
   const { author, offer, location, extended } = currentOffer;
   currentOffer = Object.assign({}, author, offer, location, extended);
-  FIELDS.forEach(field => delete currentOffer[field]);
+  fields.forEach(field => delete currentOffer[field]);
   return currentOffer;
 }
 
