@@ -13,11 +13,8 @@ const typeFieldHandler = (e) => {
   priceInput.placeholder = price;
 };
 
-const checkinFieldHandler = (e) => {
+const timeFieldHandler = (e) => {
   checkout.value = e.target.value;
-}
-
-const checkoutFieldHandler = (e) => {
   checkin.value = e.target.value;
 }
 
@@ -26,11 +23,9 @@ form.addEventListener('change', (e) => {
     typeFieldHandler(e);
   }
 
-  if (e.target === checkin) {
-    checkinFieldHandler(e);
-  }
-
-  if (e.target === checkout) {
-    checkoutFieldHandler(e);
+  if (e.target === checkin || e.target === checkout) {
+    timeFieldHandler(e);
   }
 });
+
+export { form };

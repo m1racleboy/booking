@@ -9,8 +9,6 @@ const HOUSE_TYPES = {
 };
 
 const fields = [
-  'x',
-  'y',
   'guests',
   'rooms',
   'checkin',
@@ -81,7 +79,9 @@ const createOffer = (currentOffer) => {
 
     node.src = value;
   });
-  popup.classList.remove('hidden');
+  // popup.classList.remove('hidden'); удаляю появления модалки в окне карты, пункт 1 дз 6.1
 }
 
 createOffer(currentOffer);
+
+export { similarCards };

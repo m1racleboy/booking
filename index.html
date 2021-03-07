@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="leaflet/leaflet.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Кексобукинг</title>
 </head>
@@ -20,7 +21,7 @@
     <section class="map">
 
       <!-- Блок для вставки карты -->
-      <div class="map__canvas" id="map-canvas"></div>
+      <div class="map__canvas" id="map-canvas" style="width: 1200px; height: 500px;"></div>
 
       <!-- Фильтрация объявлений -->
       <div class="map__filters-container">
@@ -111,7 +112,7 @@
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
-          <input id="price" name="price" type="number" placeholder="1000"  min="0" max="1000000" value="1000" required>
+          <input id="price" name="price" type="number" placeholder="1000"  min="1000" max="1000000" value="1000" required>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--time">
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>
@@ -246,6 +247,8 @@
       <button type="button" class="error__button">Попробовать снова</button>
     </div>
   </template>
+
+  <script src="leaflet/leaflet.js"></script>
   <script src="js/main.js" type="module"></script>
 </body>
 
