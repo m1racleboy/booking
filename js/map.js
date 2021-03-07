@@ -1,40 +1,35 @@
 import { form } from './form.js';
 import { similarCards } from './create-card.js';
 const L = window.L;
-
+const TOKYO_LATITUDE = 35.6895;
+const TOKYO_LONGITUDE = 139.69171;
+const MAIN_PIN = 52;
+const PIN = 40;
+// Я пока с массивом points, объединением в функции и динамической генерацией размеров пинов повременю,
+// по памяти кривовато получилось сделать, оставлю это на после защитное время), в некст дз коммент удалю, если этот смержишь
 const mapFilters = document.querySelector('.map__filters');
+const nodes = [...mapFilters.children, ...form.children];
 form.classList.add('ad-form--disabled');
 mapFilters.classList.add('map__filters--disabled');
 
-const mapNodes = Array.from(mapFilters.children);
-const formNodes = Array.from(form.children);
+const changeNodeStates = (node, condition) => {
+  node.forEach(element => {
+    element.disabled = condition;
+  });
+}
 
-mapNodes.forEach(element => {
-  element.disabled = true;
-});
-
-formNodes.forEach(element => {
-  element.disabled = true;
-});
-
-
+changeNodeStates(nodes, true);
 
 const map = L.map('map-canvas')
   .on('load', () => {
     form.classList.remove('ad-form--disabled');
     mapFilters.classList.remove('map__filters--disabled');
 
-    mapNodes.forEach(element => {
-      element.disabled = false;
-    });
-
-    formNodes.forEach(element => {
-      element.disabled = false;
-    });
+    changeNodeStates(nodes, false);
   })
   .setView({
-    lat: 35.6895,
-    lng: 139.69171,
+    lat: TOKYO_LATITUDE,
+    lng: TOKYO_LONGITUDE,
   }, 13);
 
 L.tileLayer(
@@ -53,21 +48,17 @@ similarCards.forEach((item, i) => {
   }
 });
 
-const createCustomPopup = ({ lat, lng, title }) => `<section class="balloon">
-  <h3 class="balloon__title">${title}</h3>
-  <p class="balloon__lat-lng">Координаты: ${lat}, ${lng}</p>
-</section>`;
 
 const mainPinIcon = L.icon({
   iconUrl: '../img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: [MAIN_PIN, MAIN_PIN],
+  iconAnchor: [MAIN_PIN / 2, MAIN_PIN],
 });
 
 const mainPinMarker = L.marker(
   {
-    lat: 35.6895,
-    lng: 139.69171,
+    lat: TOKYO_LATITUDE,
+    lng: TOKYO_LONGITUDE,
   },
   {
     draggable: true,
@@ -86,9 +77,14 @@ points.forEach((point) => {
 
   const icon = L.icon({
     iconUrl: '../img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconSize: [PIN, PIN],
+    iconAnchor: [PIN / 2, PIN],
   });
+
+  const createCustomPopup = ({ lat, lng, title }) => `<section class="balloon">
+    <h3 class="balloon__title">${title}</h3>
+    <p class="balloon__lat-lng">Координаты: ${lat}, ${lng}</p>
+  </section>`;
 
   const marker = L.marker(
     {
