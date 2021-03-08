@@ -79,7 +79,6 @@ const createOffer = (currentOffer) => {
 
     node.src = value;
   });
-  // popup.classList.remove('hidden'); удаляю появления модалки в окне карты, пункт 1 дз 6.1
 }
 
 createOffer(currentOffer);
