@@ -9,8 +9,6 @@ const HOUSE_TYPES = {
 };
 
 const fields = [
-  'x',
-  'y',
   'guests',
   'rooms',
   'checkin',
@@ -81,7 +79,8 @@ const createOffer = (currentOffer) => {
 
     node.src = value;
   });
-  popup.classList.remove('hidden');
 }
 
 createOffer(currentOffer);
+
+export { similarCards };

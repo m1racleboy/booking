@@ -89,7 +89,7 @@ const getOffer = (location) => {
 
   return {
     title: `Заголовок - ${getRoundNumber(MIN_ELEMENTS, COUNT_OF_MOCKS)}`,
-    address: `Координата по x: ${location.x} Координата по y: ${location.y}`,
+    address: `Координата по x: ${location.lat} Координата по y: ${location.lng}`,
     price: getRoundNumber(MIN_PRICE[hotelType], MAX_PRICE),
     type: hotelType,
     rooms: roomsCount,
@@ -104,8 +104,8 @@ const getOffer = (location) => {
 
 
 const getLocation = () => ({
-  x: getPoint(MIN_LOCATION_X, MAX_LOCATION_X, MAX_COUNT_OF_DECIMAL_NUMBERS),
-  y: getPoint(MIN_LOCATION_Y, MAX_LOCATION_Y, MAX_COUNT_OF_DECIMAL_NUMBERS),
+  lat: getPoint(MIN_LOCATION_X, MAX_LOCATION_X, MAX_COUNT_OF_DECIMAL_NUMBERS),
+  lng: getPoint(MIN_LOCATION_Y, MAX_LOCATION_Y, MAX_COUNT_OF_DECIMAL_NUMBERS),
 });
 
 const getExtended = (offer) => ({
