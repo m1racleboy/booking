@@ -61,8 +61,8 @@ const mainPinMarker = L.marker(
 
 mainPinMarker.addTo(map);
 
-mainPinMarker.on('moveend', (evt) => {
-  addressInput.value = evt.target.getLatLng();
+mainPinMarker.on('moveend', (e) => {
+  addressInput.value = e.target.getLatLng();
 });
 
 const createCustomPopup = ({ lat, lng, title }) => `<section class="balloon">
