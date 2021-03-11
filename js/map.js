@@ -1,4 +1,4 @@
-import { form } from './form.js';
+import { form, addressInput } from './form.js';
 import { similarCards } from './create-card.js';
 const L = window.L;
 const TOKYO_LATITUDE = 35.6895;
@@ -61,9 +61,9 @@ const mainPinMarker = L.marker(
 
 mainPinMarker.addTo(map);
 
-// mainPinMarker.on('moveend', (evt) => {
-//   console.log(evt.target.getLatLng());
-// });
+mainPinMarker.on('moveend', (evt) => {
+  addressInput.value = evt.target.getLatLng();
+});
 
 const createCustomPopup = ({ lat, lng, title }) => `<section class="balloon">
     <h3 class="balloon__title">${title}</h3>
