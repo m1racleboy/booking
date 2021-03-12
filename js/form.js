@@ -24,7 +24,6 @@ const timeFieldHandler = (targetValue) => {
 }
 
 const capacityFieldHandler = (targetValue) => {
-  targetValue = +targetValue;
   const MAX_ROOMS = 100;
   const NO_ROOMS = 0;
   const rooms = [...roomsCount.children].map(element => +element.value);
@@ -49,19 +48,23 @@ const capacityFieldHandler = (targetValue) => {
   });
 }
 
-form.addEventListener('change', (e) => {
+const changeHandler = (e) => {
   const targetInput = e.target;
   const targetValue = targetInput.value;
 
   switch (targetInput) {
-    case typeField: typeFieldHandler(targetValue); break;
+    case typeField: typeFieldHandler(targetValue);
+      break;
     case checkin:
-    case checkout: timeFieldHandler(targetValue); break;
-    case roomsCount: capacityFieldHandler(targetValue); break;
+    case checkout: timeFieldHandler(targetValue);
+      break;
+    case roomsCount: capacityFieldHandler(+targetValue);
+      break;
+    default: 'something';
   }
-});
+}
 
-titleInput.addEventListener('input', () => {
+const inputHandler = () => {
   const valueLength = titleInput.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
@@ -73,6 +76,23 @@ titleInput.addEventListener('input', () => {
   }
 
   titleInput.reportValidity();
+}
+
+form.addEventListener('focus', () => {
+  form.addEventListener('change', (e) => {
+    changeHandler(e);
+  });
+
+  titleInput.addEventListener('input', () => {
+    inputHandler();
+  });
+}, true);
+
+form.addEventListener('blur', (e) => {
+  form.removeEventListener('change', changeHandler(e), true);
+  form.removeEventListener('input', inputHandler(), true);
 });
+
+
 
 export { form, addressInput };
