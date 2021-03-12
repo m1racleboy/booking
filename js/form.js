@@ -12,47 +12,52 @@ const MAX_TITLE_LENGTH = 100;
 const roomsCount = form.querySelector('#room_number');
 const capacitySelect = form.querySelector('#capacity');
 
-const typeFieldHandler = (e) => {
-  const price = MIN_PRICE[e.target.value];
+const typeFieldHandler = (targetValue) => {
+  const price = MIN_PRICE[targetValue];
   priceInput.min = price;
   priceInput.placeholder = price;
 };
 
-const timeFieldHandler = (e) => {
-  checkout.value = e.target.value;
-  checkin.value = e.target.value;
+const timeFieldHandler = (targetValue) => {
+  checkout.value = targetValue;
+  checkin.value = targetValue;
+}
+
+const capacityFieldHandler = (targetValue) => {
+  targetValue = +targetValue;
+  const MAX_ROOMS = 100;
+  const NO_ROOMS = 0;
+  const rooms = [...roomsCount.children].map(element => +element.value);
+  const capacity = [...capacitySelect];
+  const capacityValues = capacity.map(element => +element.value);
+  if (targetValue === MAX_ROOMS) {
+    capacitySelect.value = NO_ROOMS;
+  }
+  else {
+    capacitySelect.value = targetValue;
+  }
+  capacityValues.forEach((element, i) => {
+    if (element === rooms[i] && element <= targetValue && targetValue !== MAX_ROOMS) {
+      capacity[i].disabled = false;
+    }
+    else if (targetValue === MAX_ROOMS && element === NO_ROOMS) {
+      capacity[capacity.length - 1].disabled = false;
+    }
+    else {
+      capacity[i].disabled = true;
+    }
+  });
 }
 
 form.addEventListener('change', (e) => {
-  if (e.target === typeField) {
-    typeFieldHandler(e);
-  }
+  const targetInput = e.target;
+  const targetValue = targetInput.value;
 
-  if (e.target === checkin || e.target === checkout) {
-    timeFieldHandler(e);
-  }
-
-  if (e.target === roomsCount) {
-    const options = [...capacitySelect.options];
-
-    const Capacity = {
-      '1': [options[0]],
-      '2': [options[0], options[1]],
-      '3': [options[0], options[1], options[2]],
-      '100': [options[3]],
-    };
-
-    const capacityOptions = Capacity[rooms];
-    const rooms = e.target.value;
-
-    capacitySelect.value = e.target.value;
-    options.forEach(element => {
-      element.disabled = true;
-    });
-
-    capacityOptions.forEach(element => {
-      element.disabled = false;
-    });
+  switch (targetInput) {
+    case typeField: typeFieldHandler(targetValue); break;
+    case checkin:
+    case checkout: timeFieldHandler(targetValue); break;
+    case roomsCount: capacityFieldHandler(targetValue); break;
   }
 });
 
