@@ -1,7 +1,7 @@
 import { getMockData } from './mock.js';
 import { getRoundNumber } from './util.js';
 
-const HOUSE_TYPES = {
+const housesTypes = {
   palace: 'Дворец',
   house: 'Дом',
   flat: 'Квартира',
@@ -19,6 +19,7 @@ const popup = document.querySelector('#card').content.querySelector('.popup').cl
 const similarOfferList = document.querySelector('#map-canvas');
 const similarCards = getMockData();
 const nodes = Array.from(popup.children);
+const currentOffer = similarCards[getRoundNumber(0, 9)];
 similarOfferList.appendChild(popup);
 popup.classList.add('hidden');
 
@@ -45,7 +46,6 @@ const renderFeatures = (features, featureElement) => {
   });
 }
 
-const currentOffer = similarCards[getRoundNumber(0, 9)];
 
 const createOffer = (currentOffer) => {
   const offer = getSimpleStructure(currentOffer);
@@ -74,7 +74,7 @@ const createOffer = (currentOffer) => {
     }
 
     if (key === 'type') {
-      node.textContent = HOUSE_TYPES[value];
+      node.textContent = housesTypes[value];
     }
 
     node.src = value;

@@ -56,7 +56,7 @@ const getGuestsCount = (rooms) => {
   return 'не для гостей';
 }
 
-function getCapacity(guests, rooms) {
+const getCapacity = (guests, rooms) => {
   let capacity;
 
   switch (rooms) {

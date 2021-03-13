@@ -1,5 +1,6 @@
-import { form } from './form.js';
+import { form, addressInput } from './form.js';
 import { similarCards } from './create-card.js';
+import { MAX_COUNT_OF_DECIMAL_NUMBERS } from './constant.js';
 const L = window.L;
 const TOKYO_LATITUDE = 35.6895;
 const TOKYO_LONGITUDE = 139.69171;
@@ -61,9 +62,10 @@ const mainPinMarker = L.marker(
 
 mainPinMarker.addTo(map);
 
-// mainPinMarker.on('moveend', (evt) => {
-//   console.log(evt.target.getLatLng());
-// });
+mainPinMarker.on('moveend', (e) => {
+  const coordinates = e.target.getLatLng();
+  addressInput.value = `${coordinates.lat.toFixed(MAX_COUNT_OF_DECIMAL_NUMBERS)}, ${coordinates.lng.toFixed(MAX_COUNT_OF_DECIMAL_NUMBERS)}`;
+});
 
 const createCustomPopup = ({ lat, lng, title }) => `<section class="balloon">
     <h3 class="balloon__title">${title}</h3>
