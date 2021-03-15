@@ -1,8 +1,6 @@
 import { MIN_PRICE } from './constant.js';
 import { sendData } from './api.js';
-import { openModal, closeModal } from './user-modal.js';
-const success = document.querySelector('.success');
-const error = document.querySelector('.error');
+import { openModal, closeModal, success, error } from './user-modal.js';
 const typeField = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
 const form = document.querySelector('.ad-form');
@@ -12,7 +10,7 @@ const titleInput = form.querySelector('#title');
 const addressInput = form.querySelector('#address');
 const rooms = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
-const MIN_TITLE_LENGTH = 0;
+const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_ROOMS = 100;
 const NO_ROOMS = 0;
@@ -101,7 +99,6 @@ form.addEventListener('blur', () => {
   titleInput.removeEventListener('input', inputHandler, true);
 });
 
-
 const showModal = (response) => {
   openModal(response);
 
@@ -115,7 +112,10 @@ const sendOfferFormSubmit = () => {
     e.preventDefault();
 
     sendData(
-      () => showModal(success),
+      () => {
+        form.reset();
+        showModal(success);
+      },
       () => showModal(error),
       new FormData(e.target),
     );

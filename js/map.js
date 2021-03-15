@@ -74,7 +74,6 @@ const getPins = (pins) => {
   });
 
   points.forEach((point) => {
-    console.log(point);
     const icon = L.icon({
       iconUrl: '../img/pin.svg',
       iconSize: [PIN, PIN],
