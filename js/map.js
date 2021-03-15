@@ -1,5 +1,5 @@
 import { form, addressInput } from './form.js';
-import { similarCards } from './create-card.js';
+import { createOffer, getSimpleStructure } from './create-card.js';
 import { MAX_COUNT_OF_DECIMAL_NUMBERS } from './constant.js';
 const L = window.L;
 const TOKYO_LATITUDE = 35.6895;
@@ -30,6 +30,7 @@ changeNodesStates(nodes, true);
 const map = L.map('map-canvas')
   .on('load', () => {
     changeNodesStates(nodes, false);
+    addressInput.value = `${TOKYO_LATITUDE}, ${TOKYO_LONGITUDE}`;
   })
   .setView({
     lat: TOKYO_LATITUDE,
@@ -67,23 +68,13 @@ mainPinMarker.on('moveend', (e) => {
   addressInput.value = `${coordinates.lat.toFixed(MAX_COUNT_OF_DECIMAL_NUMBERS)}, ${coordinates.lng.toFixed(MAX_COUNT_OF_DECIMAL_NUMBERS)}`;
 });
 
-const createCustomPopup = ({ lat, lng, title }) => `<section class="balloon">
-    <h3 class="balloon__title">${title}</h3>
-    <p class="balloon__lat-lng">Координаты: ${lat}, ${lng}</p>
-  </section>`;
-
 const getPins = (pins) => {
   let points = pins.map(item => {
-    return {
-      title: item.offer.title,
-      lat: item.location.lat,
-      lng: item.location.lng,
-    }
+    return getSimpleStructure(item);
   });
 
   points.forEach((point) => {
-    const { lat, lng } = point;
-
+    console.log(point);
     const icon = L.icon({
       iconUrl: '../img/pin.svg',
       iconSize: [PIN, PIN],
@@ -92,18 +83,17 @@ const getPins = (pins) => {
 
     const marker = L.marker(
       {
-        lat,
-        lng,
+        lat: point.lat,
+        lng: point.lng,
       },
       {
         icon,
       },
     );
-
     marker
       .addTo(map)
       .bindPopup(
-        createCustomPopup(point),
+        createOffer(point),
         {
           keepInView: true,
         },
@@ -111,4 +101,4 @@ const getPins = (pins) => {
   });
 }
 
-getPins(similarCards);
+export { getPins };

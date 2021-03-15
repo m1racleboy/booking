@@ -1,5 +1,8 @@
-import { MIN_PRICE } from './mock.js';
-
+import { MIN_PRICE } from './constant.js';
+import { sendData } from './api.js';
+import { openModal, closeModal } from './user-modal.js';
+const success = document.querySelector('.success');
+const error = document.querySelector('.error');
 const typeField = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
 const form = document.querySelector('.ad-form');
@@ -9,10 +12,11 @@ const titleInput = form.querySelector('#title');
 const addressInput = form.querySelector('#address');
 const rooms = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
-const MIN_TITLE_LENGTH = 30;
+const MIN_TITLE_LENGTH = 0;
 const MAX_TITLE_LENGTH = 100;
 const MAX_ROOMS = 100;
 const NO_ROOMS = 0;
+const MODAL_SHOW_TIME = 5000;
 
 const typeFieldHandler = (targetValue) => {
   const price = MIN_PRICE[targetValue];
@@ -98,5 +102,24 @@ form.addEventListener('blur', () => {
 });
 
 
+const showModal = (response) => {
+  openModal(response);
 
-export { form, addressInput };
+  setTimeout(() => {
+    closeModal(response);
+  }, MODAL_SHOW_TIME);
+}
+
+const sendOfferFormSubmit = () => {
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    sendData(
+      () => showModal(success),
+      () => showModal(error),
+      new FormData(e.target),
+    );
+  });
+};
+
+export { form, addressInput, MIN_PRICE, sendOfferFormSubmit };

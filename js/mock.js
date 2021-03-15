@@ -1,7 +1,7 @@
 import { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray } from './util.js';
 import {
   MIN_ELEMENTS, MIN_POSITIVE_NUMBER, COUNT_OF_MOCKS, MIN_LOCATION_X, MIN_LOCATION_Y,
-  MAX_LOCATION_X, MAX_LOCATION_Y, MAX_PRICE, MAX_COUNT_OF_AVATARS, MAX_COUNT_OF_DECIMAL_NUMBERS, MAX_FEATURES, MAX_PHOTOS
+  MAX_LOCATION_X, MAX_LOCATION_Y, MAX_PRICE, MAX_COUNT_OF_AVATARS, MAX_COUNT_OF_DECIMAL_NUMBERS, MAX_FEATURES, MAX_PHOTOS, MIN_PRICE
 } from './constant.js'
 
 
@@ -35,12 +35,7 @@ const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
-const MIN_PRICE = {
-  flat: 1000,
-  bungalow: 0,
-  house: 5000,
-  palace: 10000,
-};
+
 
 const ROOMS = [1, 2, 3, 100];
 const GUESTS = [1, 2, 3, 'не для гостей'];
