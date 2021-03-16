@@ -2,10 +2,14 @@ const success = document.querySelector('.success');
 const error = document.querySelector('.error');
 const closeErrorButton = error.querySelector('.error__button');
 
+const closeModal = (response) => {
+  response.classList.add('hidden');
+}
+
 const openModal = (response) => {
   response.classList.remove('hidden');
   document.addEventListener('keydown', function (e) {
-    let keyCode = e.keyCode;
+    const keyCode = e.keyCode;
     if (keyCode === 27) {
       response.classList.add('hidden');
     }
@@ -16,10 +20,6 @@ const openModal = (response) => {
       response.classList.add('hidden');
     }
   });
-}
-
-const closeModal = (response) => {
-  response.classList.add('hidden');
 }
 
 closeErrorButton.addEventListener('click', () => {

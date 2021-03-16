@@ -1,9 +1,10 @@
-import { MIN_PRICE } from './constant.js';
+import { MIN_PRICE, START_POINTS } from './constant.js';
 import { sendData } from './api.js';
 import { openModal, closeModal, success, error } from './user-modal.js';
 const typeField = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
 const form = document.querySelector('.ad-form');
+const mapFilters = document.querySelector('.map__filters');
 const checkin = document.querySelector('#timein');
 const checkout = document.querySelector('#timeout');
 const titleInput = form.querySelector('#title');
@@ -114,6 +115,8 @@ const sendOfferFormSubmit = () => {
     sendData(
       () => {
         form.reset();
+        mapFilters.reset();
+        addressInput.value = START_POINTS;
         showModal(success);
       },
       () => showModal(error),
@@ -122,4 +125,4 @@ const sendOfferFormSubmit = () => {
   });
 };
 
-export { form, addressInput, MIN_PRICE, sendOfferFormSubmit };
+export { form, addressInput, MIN_PRICE, mapFilters, sendOfferFormSubmit };

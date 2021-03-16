@@ -1,13 +1,7 @@
-import { form, addressInput } from './form.js';
+import { form, addressInput, mapFilters } from './form.js';
 import { createOffer, getSimpleStructure } from './create-card.js';
-import { MAX_COUNT_OF_DECIMAL_NUMBERS } from './constant.js';
+import { MAX_COUNT_OF_DECIMAL_NUMBERS, TOKYO_LATITUDE, TOKYO_LONGITUDE, MAIN_PIN, PIN, START_POINTS } from './constant.js';
 const L = window.L;
-const TOKYO_LATITUDE = 35.6895;
-const TOKYO_LONGITUDE = 139.69171;
-const MAIN_PIN = 52;
-const PIN = 40;
-
-const mapFilters = document.querySelector('.map__filters');
 const nodes = [...mapFilters.children, ...form.children];
 
 const changeNodesStates = (node, condition) => {
@@ -30,7 +24,7 @@ changeNodesStates(nodes, true);
 const map = L.map('map-canvas')
   .on('load', () => {
     changeNodesStates(nodes, false);
-    addressInput.value = `${TOKYO_LATITUDE}, ${TOKYO_LONGITUDE}`;
+    addressInput.value = START_POINTS;
   })
   .setView({
     lat: TOKYO_LATITUDE,
@@ -100,4 +94,4 @@ const getPins = (pins) => {
   });
 }
 
-export { getPins };
+export { getPins, START_POINTS };
