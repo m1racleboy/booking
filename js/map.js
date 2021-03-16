@@ -94,4 +94,4 @@ const getPins = (pins) => {
   });
 }
 
-export { getPins, START_POINTS };
+export { getPins };
