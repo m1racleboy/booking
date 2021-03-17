@@ -5,6 +5,8 @@ import { showModal } from './util.js';
 import { COUNT_OF_PINS, MIN_POSITIVE_NUMBER, START_POINTS } from './constant.js';
 import { success, error } from './user-modal.js';
 
+const resetButton = form.querySelector('.ad-form__reset');
+
 getData((offers) => {
   getPins(offers.slice(MIN_POSITIVE_NUMBER, COUNT_OF_PINS));
 });
@@ -23,4 +25,12 @@ form.addEventListener('submit', (e) => {
     () => showModal(error),
     new FormData(e.target),
   );
+});
+
+resetButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  form.reset();
+  mapFilters.reset();
+  addressInput.value = START_POINTS;
+  refreshMap();
 });
