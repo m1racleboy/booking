@@ -8,14 +8,13 @@ const closeModal = (response) => {
 
 const openModal = (response) => {
   response.classList.remove('hidden');
-  document.addEventListener('keydown', function (e) {
-    const keyCode = e.keyCode;
-    if (keyCode === 27) {
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Esc' || e.code === 'Escape') {
       response.classList.add('hidden');
     }
   });
 
-  response.addEventListener('click', function (e) {
+  response.addEventListener('click', (e) => {
     if (e.target === response) {
       response.classList.add('hidden');
     }

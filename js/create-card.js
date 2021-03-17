@@ -12,10 +12,6 @@ const fields = [
   'checkout',
 ];
 
-const popup = document.querySelector('#card').content.querySelector('.popup').cloneNode(true);
-const nodes = Array.from(popup.children);
-popup.classList.add('hidden');
-
 const getCapacity = (guests, rooms) => {
   let capacity;
 
@@ -63,6 +59,9 @@ const renderFeatures = (features, featureElement) => {
 }
 
 const createOffer = (currentOffer) => {
+  const popup = document.querySelector('#card').content.querySelector('.popup').cloneNode(true);
+  const nodes = Array.from(popup.children);
+  popup.classList.add('hidden');
   const keys = Object.keys(currentOffer);
   const classes = nodes.map(item => item.classList.value);
   classes.forEach((item, i) => {

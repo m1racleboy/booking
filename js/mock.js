@@ -1,6 +1,6 @@
 import { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray } from './util.js';
 import {
-  MIN_ELEMENTS, MIN_POSITIVE_NUMBER, COUNT_OF_MOCKS, MIN_LOCATION_X, MIN_LOCATION_Y,
+  MIN_ELEMENT, MIN_POSITIVE_NUMBER, COUNT_OF_PINS, MIN_LOCATION_X, MIN_LOCATION_Y,
   MAX_LOCATION_X, MAX_LOCATION_Y, MAX_PRICE, MAX_COUNT_OF_AVATARS, MAX_COUNT_OF_DECIMAL_NUMBERS, MAX_FEATURES, MAX_PHOTOS, MIN_PRICE
 } from './constant.js'
 
@@ -83,7 +83,7 @@ const getOffer = (location) => {
   const guestsCount = getGuestsCount(roomsCount);
 
   return {
-    title: `Заголовок - ${getRoundNumber(MIN_ELEMENTS, COUNT_OF_MOCKS)}`,
+    title: `Заголовок - ${getRoundNumber(MIN_ELEMENT, COUNT_OF_PINS)}`,
     address: `Координата по x: ${location.lat} Координата по y: ${location.lng}`,
     price: getRoundNumber(MIN_PRICE[hotelType], MAX_PRICE),
     type: hotelType,
@@ -91,9 +91,9 @@ const getOffer = (location) => {
     guests: guestsCount,
     checkin: TIME,
     checkout: TIME,
-    features: getRandomArray(FEATURES, getRoundNumber(MIN_ELEMENTS, MAX_FEATURES)),
+    features: getRandomArray(FEATURES, getRoundNumber(MIN_ELEMENT, MAX_FEATURES)),
     description: getRandomArrayElement(DESCRIPTIONS),
-    photos: getRandomArray(PHOTOS, getRoundNumber(MIN_ELEMENTS, MAX_PHOTOS)),
+    photos: getRandomArray(PHOTOS, getRoundNumber(MIN_ELEMENT, MAX_PHOTOS)),
   };
 }
 
@@ -110,12 +110,12 @@ const getExtended = (offer) => ({
 
 const getMockData = () => {
   const mockArray = [];
-  for (let i = MIN_POSITIVE_NUMBER; i < COUNT_OF_MOCKS; i++) {
+  for (let i = MIN_POSITIVE_NUMBER; i < COUNT_OF_PINS; i++) {
     const location = getLocation();
     const offer = getOffer(location);
     mockArray[i] = {
       author: {
-        avatar: `img/avatars/user0${getRoundNumber(MIN_ELEMENTS, MAX_COUNT_OF_AVATARS)}.png`,
+        avatar: `img/avatars/user0${getRoundNumber(MIN_ELEMENT, MAX_COUNT_OF_AVATARS)}.png`,
       },
       offer: offer,
       location: location,

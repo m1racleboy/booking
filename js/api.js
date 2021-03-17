@@ -1,3 +1,5 @@
+import { ERROR_MESSAGE } from './constant.js';
+
 const getData = (onSuccess) => {
   fetch('https://22.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
@@ -18,12 +20,12 @@ const sendData = (onSuccess, onFail, body) => {
       if (response.ok) {
         onSuccess();
       } else {
-        onFail('Не удалось отправить форму. Попробуйте ещё раз');
+        onFail(ERROR_MESSAGE);
       }
     })
     .catch(() => {
-      onFail('Не удалось отправить форму. Попробуйте ещё раз');
+      onFail(ERROR_MESSAGE);
     });
 };
 
-export {getData, sendData};
+export { getData, sendData };

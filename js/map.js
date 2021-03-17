@@ -1,6 +1,6 @@
 import { form, addressInput, mapFilters } from './form.js';
 import { createOffer, getSimpleStructure } from './create-card.js';
-import { MAX_COUNT_OF_DECIMAL_NUMBERS, TOKYO_LATITUDE, TOKYO_LONGITUDE, MAIN_PIN, PIN, START_POINTS } from './constant.js';
+import { MAX_COUNT_OF_DECIMAL_NUMBERS, MAIN_PIN, PIN, START_POINTS, START_POINTS_OBJECT } from './constant.js';
 const L = window.L;
 const nodes = [...mapFilters.children, ...form.children];
 
@@ -26,10 +26,7 @@ const map = L.map('map-canvas')
     changeNodesStates(nodes, false);
     addressInput.value = START_POINTS;
   })
-  .setView({
-    lat: TOKYO_LATITUDE,
-    lng: TOKYO_LONGITUDE,
-  }, 13);
+  .setView(START_POINTS_OBJECT, 13);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -45,10 +42,7 @@ const mainPinIcon = L.icon({
 });
 
 const mainPinMarker = L.marker(
-  {
-    lat: TOKYO_LATITUDE,
-    lng: TOKYO_LONGITUDE,
-  },
+  START_POINTS_OBJECT,
   {
     draggable: true,
     icon: mainPinIcon,
@@ -61,6 +55,10 @@ mainPinMarker.on('moveend', (e) => {
   const coordinates = e.target.getLatLng();
   addressInput.value = `${coordinates.lat.toFixed(MAX_COUNT_OF_DECIMAL_NUMBERS)}, ${coordinates.lng.toFixed(MAX_COUNT_OF_DECIMAL_NUMBERS)}`;
 });
+
+const refreshMap = () => {
+  map.setView(START_POINTS_OBJECT, 13);
+}
 
 const getPins = (pins) => {
   let points = pins.map(item => {

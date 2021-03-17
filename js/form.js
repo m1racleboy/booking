@@ -1,6 +1,7 @@
 import { MIN_PRICE, START_POINTS } from './constant.js';
 import { sendData } from './api.js';
 import { openModal, closeModal, success, error } from './user-modal.js';
+// import { refreshMap } from './map.js';
 const typeField = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
 const form = document.querySelector('.ad-form');

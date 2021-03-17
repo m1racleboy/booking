@@ -1,4 +1,4 @@
-import { MIN_ELEMENTS } from './constant.js';
+import { MIN_ELEMENT } from './constant.js';
 
 const getRandomNumber = (min, max) => {
   min = +min;
@@ -30,7 +30,7 @@ const getRandomArrayElement = (elements) => {
 const getRandomArray = (array, length) => {
   const arrayCopy = [...array];
   for (let i = 0; i < (array.length - length); i++) {
-    arrayCopy.splice(getRoundNumber(0, arrayCopy.length), MIN_ELEMENTS)
+    arrayCopy.splice(getRoundNumber(0, arrayCopy.length), MIN_ELEMENT)
   }
   return arrayCopy;
 }
