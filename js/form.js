@@ -1,7 +1,5 @@
-import { MIN_PRICE, START_POINTS } from './constant.js';
-import { sendData } from './api.js';
-import { openModal, closeModal, success, error } from './user-modal.js';
-// import { refreshMap } from './map.js';
+import { MIN_PRICE } from './constant.js';
+
 const typeField = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
 const form = document.querySelector('.ad-form');
@@ -16,7 +14,6 @@ const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_ROOMS = 100;
 const NO_ROOMS = 0;
-const MODAL_SHOW_TIME = 5000;
 
 const typeFieldHandler = (targetValue) => {
   const price = MIN_PRICE[targetValue];
@@ -101,29 +98,4 @@ form.addEventListener('blur', () => {
   titleInput.removeEventListener('input', inputHandler, true);
 });
 
-const showModal = (response) => {
-  openModal(response);
-
-  setTimeout(() => {
-    closeModal(response);
-  }, MODAL_SHOW_TIME);
-}
-
-const sendOfferFormSubmit = () => {
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    sendData(
-      () => {
-        form.reset();
-        mapFilters.reset();
-        addressInput.value = START_POINTS;
-        showModal(success);
-      },
-      () => showModal(error),
-      new FormData(e.target),
-    );
-  });
-};
-
-export { form, addressInput, MIN_PRICE, mapFilters, sendOfferFormSubmit };
+export { form, addressInput, MIN_PRICE, mapFilters };

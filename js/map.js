@@ -1,6 +1,6 @@
 import { form, addressInput, mapFilters } from './form.js';
 import { createOffer, getSimpleStructure } from './create-card.js';
-import { MAX_COUNT_OF_DECIMAL_NUMBERS, MAIN_PIN, PIN, START_POINTS, START_POINTS_OBJECT } from './constant.js';
+import { MAX_COUNT_OF_DECIMAL_NUMBERS, MAIN_PIN, PIN, START_POINTS, START_POINTS_OBJECT, TOKYO_LATITUDE, TOKYO_LONGITUDE } from './constant.js';
 const L = window.L;
 const nodes = [...mapFilters.children, ...form.children];
 
@@ -58,6 +58,8 @@ mainPinMarker.on('moveend', (e) => {
 
 const refreshMap = () => {
   map.setView(START_POINTS_OBJECT, 13);
+  const startLatLng = new L.LatLng(TOKYO_LATITUDE, TOKYO_LONGITUDE);
+  mainPinMarker.setLatLng(startLatLng);
 }
 
 const getPins = (pins) => {
@@ -92,4 +94,4 @@ const getPins = (pins) => {
   });
 }
 
-export { getPins };
+export { getPins, refreshMap };

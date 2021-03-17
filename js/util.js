@@ -1,4 +1,5 @@
-import { MIN_ELEMENT } from './constant.js';
+import { MIN_ELEMENT, MODAL_SHOW_TIME } from './constant.js';
+import { openModal, closeModal } from './user-modal.js';
 
 const getRandomNumber = (min, max) => {
   min = +min;
@@ -35,4 +36,12 @@ const getRandomArray = (array, length) => {
   return arrayCopy;
 }
 
-export { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray };
+const showModal = (response) => {
+  openModal(response);
+
+  setTimeout(() => {
+    closeModal(response);
+  }, MODAL_SHOW_TIME);
+}
+
+export { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray, showModal };
