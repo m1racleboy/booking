@@ -1,8 +1,8 @@
-import { addressInput, form, mapFilters } from './form.js';
-import { getPins, refreshMap } from './map.js';
+import { form } from './form.js';
+import { getPins } from './map.js';
 import { getData, sendData } from './api.js';
-import { showModal } from './util.js';
-import { COUNT_OF_PINS, MIN_POSITIVE_NUMBER, START_POINTS } from './constant.js';
+import { showModal, resetPage } from './util.js';
+import { MIN_POSITIVE_NUMBER, COUNT_OF_PINS } from './constant.js';
 import { success, error } from './user-modal.js';
 
 const resetButton = form.querySelector('.ad-form__reset');
@@ -16,10 +16,6 @@ form.addEventListener('submit', (e) => {
 
   sendData(
     () => {
-      form.reset();
-      mapFilters.reset();
-      addressInput.value = START_POINTS;
-      refreshMap();
       showModal(success);
     },
     () => showModal(error),
@@ -29,8 +25,5 @@ form.addEventListener('submit', (e) => {
 
 resetButton.addEventListener('click', (e) => {
   e.preventDefault();
-  form.reset();
-  mapFilters.reset();
-  addressInput.value = START_POINTS;
-  refreshMap();
+  resetPage();
 });

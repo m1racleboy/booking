@@ -1,5 +1,7 @@
-import { MIN_ELEMENT, MODAL_SHOW_TIME } from './constant.js';
-import { openModal, closeModal } from './user-modal.js';
+import { MIN_ELEMENT, MODAL_SHOW_TIME, START_POINTS } from './constant.js';
+import { openModal, closeModal, success } from './user-modal.js';
+import { refreshMap } from './map.js';
+import { addressInput, form, mapFilters } from './form.js';
 
 const getRandomNumber = (min, max) => {
   min = +min;
@@ -37,11 +39,24 @@ const getRandomArray = (array, length) => {
 }
 
 const showModal = (response) => {
-  openModal(response);
+  if (response === success) {
+    openModal(response);
+    refreshMap();
+  }
+  else {
+    openModal(response);
+  }
 
   setTimeout(() => {
     closeModal(response);
   }, MODAL_SHOW_TIME);
 }
 
-export { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray, showModal };
+const resetPage = () => {
+  form.reset();
+  mapFilters.reset();
+  addressInput.value = START_POINTS;
+  refreshMap();
+}
+
+export { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray, showModal, resetPage };
