@@ -1,6 +1,6 @@
 import { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray } from './util.js';
 import {
-  MIN_ELEMENT, MIN_POSITIVE_NUMBER, COUNT_OF_PINS, MIN_LOCATION_X, MIN_LOCATION_Y,
+  MIN_ELEMENT, COUNT_OF_PINS, MIN_LOCATION_X, MIN_LOCATION_Y,
   MAX_LOCATION_X, MAX_LOCATION_Y, MAX_PRICE, MAX_COUNT_OF_AVATARS, MAX_COUNT_OF_DECIMAL_NUMBERS, MAX_FEATURES, MAX_PHOTOS, MIN_PRICE
 } from './constant.js'
 
@@ -110,7 +110,7 @@ const getExtended = (offer) => ({
 
 const getMockData = () => {
   const mockArray = [];
-  for (let i = MIN_POSITIVE_NUMBER; i < COUNT_OF_PINS; i++) {
+  for (let i = 0; i < COUNT_OF_PINS; i++) {
     const location = getLocation();
     const offer = getOffer(location);
     mockArray[i] = {

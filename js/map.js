@@ -3,6 +3,7 @@ import { createOffer, getSimpleStructure } from './create-card.js';
 import { MAX_COUNT_OF_DECIMAL_NUMBERS, MAIN_PIN, PIN, START_POINTS, START_POINTS_OBJECT, TOKYO_LATITUDE, TOKYO_LONGITUDE } from './constant.js';
 const L = window.L;
 const nodes = [...mapFilters.children, ...form.children];
+const ZOOM = 13;
 
 const changeNodesStates = (node, condition) => {
   node.forEach(element => {
@@ -26,7 +27,7 @@ const map = L.map('map-canvas')
     changeNodesStates(nodes, false);
     addressInput.value = START_POINTS;
   })
-  .setView(START_POINTS_OBJECT, 13);
+  .setView(START_POINTS_OBJECT, ZOOM);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -57,7 +58,7 @@ mainPinMarker.on('moveend', (e) => {
 });
 
 const refreshMap = () => {
-  map.setView(START_POINTS_OBJECT, 13);
+  map.setView(START_POINTS_OBJECT, ZOOM);
   const startLatLng = new L.LatLng(TOKYO_LATITUDE, TOKYO_LONGITUDE);
   mainPinMarker.setLatLng(startLatLng);
 }

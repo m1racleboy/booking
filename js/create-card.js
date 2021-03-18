@@ -28,7 +28,7 @@ const getCapacity = (guests, rooms) => {
   }
 
   if (typeof guests === 'number') {
-    return capacity += `для ${guests} гост${guests === 1 ? 'я.' : 'ей.'} `;
+    return capacity += `для ${guests} гост${guests === 1 ? 'я' : 'ей'}.`;
   }
   return capacity;
 }
@@ -61,7 +61,6 @@ const renderFeatures = (features, featureElement) => {
 const createOffer = (currentOffer) => {
   const popup = document.querySelector('#card').content.querySelector('.popup').cloneNode(true);
   const nodes = Array.from(popup.children);
-  popup.classList.add('hidden');
   const keys = Object.keys(currentOffer);
   const classes = nodes.map(item => item.classList.value);
   classes.forEach((item, i) => {
