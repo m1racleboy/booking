@@ -1,30 +1,13 @@
-import { form, addressInput, mapFilters } from './form.js';
+import { addressInput, childeNodes, changeNodesStates} from './form.js';
 import { createOffer, getSimpleStructure } from './create-card.js';
-import { MAX_COUNT_OF_DECIMAL_NUMBERS, MAIN_PIN, PIN, START_POINTS, START_POINTS_OBJECT, TOKYO_LATITUDE, TOKYO_LONGITUDE } from './constant.js';
+import { MAX_COUNT_OF_DECIMAL_NUMBERS, MAIN_PIN, PIN, START_POINTS, START_POINTS_OBJECT, TOKYO_LATITUDE, TOKYO_LONGITUDE, ZOOM } from './constant.js';
 const L = window.L;
-const nodes = [...mapFilters.children, ...form.children];
-const ZOOM = 13;
 
-const changeNodesStates = (node, condition) => {
-  node.forEach(element => {
-    element.disabled = condition;
-  });
-
-  if (condition) {
-    form.classList.add('ad-form--disabled');
-    mapFilters.classList.add('map__filters--disabled');
-  }
-  else {
-    form.classList.remove('ad-form--disabled');
-    mapFilters.classList.remove('map__filters--disabled');
-  }
-}
-
-changeNodesStates(nodes, true);
+changeNodesStates(childeNodes, true);
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    changeNodesStates(nodes, false);
+    changeNodesStates(childeNodes, false);
     addressInput.value = START_POINTS;
   })
   .setView(START_POINTS_OBJECT, ZOOM);

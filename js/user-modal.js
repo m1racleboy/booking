@@ -1,6 +1,5 @@
 const success = document.querySelector('.success');
 const error = document.querySelector('.error');
-const closeErrorButton = error.querySelector('.error__button');
 
 const closeModal = (response) => {
   response.classList.add('hidden');
@@ -20,9 +19,5 @@ const openModal = (response) => {
     }
   });
 }
-
-closeErrorButton.addEventListener('click', () => {
-  closeModal(error);
-});
 
 export { openModal, closeModal, success, error };

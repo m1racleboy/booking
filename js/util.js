@@ -38,9 +38,17 @@ const getRandomArray = (array, length) => {
   return arrayCopy;
 }
 
+const resetPage = () => {
+  form.reset();
+  mapFilters.reset();
+  addressInput.value = START_POINTS;
+  refreshMap();
+}
+
 const showModal = (response) => {
   if (response === success) {
     openModal(response);
+    resetPage();
     refreshMap();
   }
   else {
@@ -50,13 +58,6 @@ const showModal = (response) => {
   setTimeout(() => {
     closeModal(response);
   }, MODAL_SHOW_TIME);
-}
-
-const resetPage = () => {
-  form.reset();
-  mapFilters.reset();
-  addressInput.value = START_POINTS;
-  refreshMap();
 }
 
 export { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray, showModal, resetPage };
