@@ -1,8 +1,14 @@
-import { MIN_PRICE } from './mock.js';
-
+import { MIN_PRICE } from './constant.js';
+import { success, error, closeModal } from './user-modal.js';
+import { showModal, resetPage } from './util.js';
+import { sendData } from './api.js';
 const typeField = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
 const form = document.querySelector('.ad-form');
+const mapFilters = document.querySelector('.map__filters');
+const resetButton = form.querySelector('.ad-form__reset');
+const childeNodes = [...mapFilters.children, ...form.children];
+const closeErrorButton = error.querySelector('.error__button');
 const checkin = document.querySelector('#timein');
 const checkout = document.querySelector('#timeout');
 const titleInput = form.querySelector('#title');
@@ -13,6 +19,21 @@ const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_ROOMS = 100;
 const NO_ROOMS = 0;
+
+const changeNodesStates = (node, condition) => {
+  node.forEach(element => {
+    element.disabled = condition;
+  });
+
+  if (condition) {
+    form.classList.add('ad-form--disabled');
+    mapFilters.classList.add('map__filters--disabled');
+  }
+  else {
+    form.classList.remove('ad-form--disabled');
+    mapFilters.classList.remove('map__filters--disabled');
+  }
+}
 
 const typeFieldHandler = (targetValue) => {
   const price = MIN_PRICE[targetValue];
@@ -86,17 +107,41 @@ const inputHandler = () => {
   titleInput.reportValidity();
 }
 
+const resetHandler = (e) => {
+  e.preventDefault();
+  resetPage();
+}
+
+const sendOfferFormSubmit = (e) => {
+  e.preventDefault();
+
+  sendData(
+    () => {
+      showModal(success);
+    },
+    () => showModal(error),
+    new FormData(e.target),
+  );
+}
+
+const closeModalHandler = () => {
+  closeModal(error);
+}
+
 form.addEventListener('focus', () => {
   form.addEventListener('change', changeHandler);
-
   titleInput.addEventListener('input', inputHandler);
+  form.addEventListener('submit', sendOfferFormSubmit);
+  resetButton.addEventListener('click', resetHandler);
+  closeErrorButton.addEventListener('click', closeModalHandler);
 }, true);
 
 form.addEventListener('blur', () => {
   form.removeEventListener('change', changeHandler, true);
   titleInput.removeEventListener('input', inputHandler, true);
+  form.removeEventListener('submit', sendOfferFormSubmit, true);
+  resetButton.removeEventListener('click', resetHandler, true);
+  closeErrorButton.removeEventListener('click', closeModalHandler, true);
 });
 
-
-
-export { form, addressInput };
+export { form, addressInput, MIN_PRICE, childeNodes, mapFilters, changeNodesStates };

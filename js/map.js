@@ -1,40 +1,16 @@
-import { form, addressInput } from './form.js';
-import { similarCards } from './create-card.js';
-import { MAX_COUNT_OF_DECIMAL_NUMBERS } from './constant.js';
+import { addressInput, childeNodes, changeNodesStates} from './form.js';
+import { createOffer, getSimpleStructure } from './create-card.js';
+import { MAX_COUNT_OF_DECIMAL_NUMBERS, MAIN_PIN, PIN, START_POINTS, START_POINTS_OBJECT, TOKYO_LATITUDE, TOKYO_LONGITUDE, ZOOM } from './constant.js';
 const L = window.L;
-const TOKYO_LATITUDE = 35.6895;
-const TOKYO_LONGITUDE = 139.69171;
-const MAIN_PIN = 52;
-const PIN = 40;
 
-const mapFilters = document.querySelector('.map__filters');
-const nodes = [...mapFilters.children, ...form.children];
-
-const changeNodesStates = (node, condition) => {
-  node.forEach(element => {
-    element.disabled = condition;
-  });
-
-  if (condition) {
-    form.classList.add('ad-form--disabled');
-    mapFilters.classList.add('map__filters--disabled');
-  }
-  else {
-    form.classList.remove('ad-form--disabled');
-    mapFilters.classList.remove('map__filters--disabled');
-  }
-}
-
-changeNodesStates(nodes, true);
+changeNodesStates(childeNodes, true);
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    changeNodesStates(nodes, false);
+    changeNodesStates(childeNodes, false);
+    addressInput.value = START_POINTS;
   })
-  .setView({
-    lat: TOKYO_LATITUDE,
-    lng: TOKYO_LONGITUDE,
-  }, 13);
+  .setView(START_POINTS_OBJECT, ZOOM);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -50,10 +26,7 @@ const mainPinIcon = L.icon({
 });
 
 const mainPinMarker = L.marker(
-  {
-    lat: TOKYO_LATITUDE,
-    lng: TOKYO_LONGITUDE,
-  },
+  START_POINTS_OBJECT,
   {
     draggable: true,
     icon: mainPinIcon,
@@ -67,23 +40,18 @@ mainPinMarker.on('moveend', (e) => {
   addressInput.value = `${coordinates.lat.toFixed(MAX_COUNT_OF_DECIMAL_NUMBERS)}, ${coordinates.lng.toFixed(MAX_COUNT_OF_DECIMAL_NUMBERS)}`;
 });
 
-const createCustomPopup = ({ lat, lng, title }) => `<section class="balloon">
-    <h3 class="balloon__title">${title}</h3>
-    <p class="balloon__lat-lng">Координаты: ${lat}, ${lng}</p>
-  </section>`;
+const refreshMap = () => {
+  map.setView(START_POINTS_OBJECT, ZOOM);
+  const startLatLng = new L.LatLng(TOKYO_LATITUDE, TOKYO_LONGITUDE);
+  mainPinMarker.setLatLng(startLatLng);
+}
 
 const getPins = (pins) => {
   let points = pins.map(item => {
-    return {
-      title: item.offer.title,
-      lat: item.location.lat,
-      lng: item.location.lng,
-    }
+    return getSimpleStructure(item);
   });
 
   points.forEach((point) => {
-    const { lat, lng } = point;
-
     const icon = L.icon({
       iconUrl: '../img/pin.svg',
       iconSize: [PIN, PIN],
@@ -92,18 +60,17 @@ const getPins = (pins) => {
 
     const marker = L.marker(
       {
-        lat,
-        lng,
+        lat: point.lat,
+        lng: point.lng,
       },
       {
         icon,
       },
     );
-
     marker
       .addTo(map)
       .bindPopup(
-        createCustomPopup(point),
+        createOffer(point),
         {
           keepInView: true,
         },
@@ -111,4 +78,4 @@ const getPins = (pins) => {
   });
 }
 
-getPins(similarCards);
+export { getPins, refreshMap };

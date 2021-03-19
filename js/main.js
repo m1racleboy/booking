@@ -1,3 +1,7 @@
-import './create-card.js';
-import './form.js';
-import './map.js';
+import { getPins } from './map.js';
+import { getData } from './api.js';
+import { COUNT_OF_PINS } from './constant.js';
+
+getData((offers) => {
+  getPins(offers.slice(0, COUNT_OF_PINS));
+});

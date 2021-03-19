@@ -1,6 +1,3 @@
-import { getMockData } from './mock.js';
-import { getRoundNumber } from './util.js';
-
 const housesTypes = {
   palace: 'Дворец',
   house: 'Дом',
@@ -15,17 +12,32 @@ const fields = [
   'checkout',
 ];
 
-const popup = document.querySelector('#card').content.querySelector('.popup').cloneNode(true);
-const similarOfferList = document.querySelector('#map-canvas');
-const similarCards = getMockData();
-const nodes = Array.from(popup.children);
-const currentOffer = similarCards[getRoundNumber(0, 9)];
-similarOfferList.appendChild(popup);
-popup.classList.add('hidden');
+const getCapacity = (guests, rooms) => {
+  let capacity;
+
+  switch (rooms) {
+    case 1: capacity = `${rooms} комната - `;
+      break;
+    case 2:
+    case 3:
+    case 4: capacity = `${rooms} комнаты - `;
+      break;
+    case 100: capacity = `${rooms} комнат не для гостей.`;
+      break;
+    default: capacity = `${rooms} комнат - `;
+  }
+
+  if (typeof guests === 'number') {
+    return capacity += `для ${guests} гост${guests === 1 ? 'я' : 'ей'}.`;
+  }
+  return capacity;
+}
 
 const getSimpleStructure = (currentOffer) => {
   const { author, offer, location, extended } = currentOffer;
   currentOffer = Object.assign({}, author, offer, location, extended);
+  currentOffer.time = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+  currentOffer.capacity = getCapacity(currentOffer.guests, currentOffer.rooms);
   fields.forEach(field => delete currentOffer[field]);
   return currentOffer;
 }
@@ -46,17 +58,15 @@ const renderFeatures = (features, featureElement) => {
   });
 }
 
-
 const createOffer = (currentOffer) => {
-  const offer = getSimpleStructure(currentOffer);
-  const keys = Object.keys(offer);
+  const popup = document.querySelector('#card').content.querySelector('.popup').cloneNode(true);
+  const nodes = Array.from(popup.children);
+  const keys = Object.keys(currentOffer);
   const classes = nodes.map(item => item.classList.value);
   classes.forEach((item, i) => {
-
     const key = keys.find(key => item.includes(key));
-    const value = offer[key];
+    const value = currentOffer[key];
     const node = nodes[i];
-
     if (!key || !value || value.length === 0) {
       node.classList.add('hidden');
     }
@@ -78,9 +88,10 @@ const createOffer = (currentOffer) => {
     }
 
     node.src = value;
+
   });
+  popup.classList.remove('hidden');
+  return popup;
 }
 
-createOffer(currentOffer);
-
-export { similarCards };
+export { createOffer, getSimpleStructure };
