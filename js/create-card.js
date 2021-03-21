@@ -6,8 +6,6 @@ const housesTypes = {
 };
 
 const fields = [
-  'guests',
-  'rooms',
   'checkin',
   'checkout',
 ];
@@ -90,7 +88,6 @@ const createOffer = (currentOffer) => {
     node.src = value;
 
   });
-  popup.classList.remove('hidden');
   return popup;
 }
 

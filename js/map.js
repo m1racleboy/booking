@@ -1,13 +1,13 @@
-import { addressInput, childeNodes, changeNodesStates} from './form.js';
+import { addressInput, childeNodes, changeFormsStates} from './form.js';
 import { createOffer, getSimpleStructure } from './create-card.js';
 import { MAX_COUNT_OF_DECIMAL_NUMBERS, MAIN_PIN, PIN, START_POINTS, START_POINTS_OBJECT, TOKYO_LATITUDE, TOKYO_LONGITUDE, ZOOM } from './constant.js';
 const L = window.L;
 
-changeNodesStates(childeNodes, true);
+changeFormsStates(childeNodes, true);
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    changeNodesStates(childeNodes, false);
+    changeFormsStates(childeNodes, false);
     addressInput.value = START_POINTS;
   })
   .setView(START_POINTS_OBJECT, ZOOM);

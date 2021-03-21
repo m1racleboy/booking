@@ -20,7 +20,7 @@ const MAX_TITLE_LENGTH = 100;
 const MAX_ROOMS = 100;
 const NO_ROOMS = 0;
 
-const changeNodesStates = (node, condition) => {
+const changeFormsStates = (node, condition) => {
   node.forEach(element => {
     element.disabled = condition;
   });
@@ -116,9 +116,7 @@ const sendOfferFormSubmit = (e) => {
   e.preventDefault();
 
   sendData(
-    () => {
-      showModal(success);
-    },
+    () => showModal(success),
     () => showModal(error),
     new FormData(e.target),
   );
@@ -144,4 +142,4 @@ form.addEventListener('blur', () => {
   closeErrorButton.removeEventListener('click', closeModalHandler, true);
 });
 
-export { form, addressInput, MIN_PRICE, childeNodes, mapFilters, changeNodesStates };
+export { form, addressInput, MIN_PRICE, childeNodes, mapFilters, changeFormsStates };
