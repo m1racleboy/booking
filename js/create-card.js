@@ -6,13 +6,11 @@ const housesTypes = {
 };
 
 const fields = [
-  'guests',
-  'rooms',
   'checkin',
   'checkout',
 ];
 
-const getCapacity = (guests, rooms) => {
+export const getCapacity = (guests, rooms) => {
   let capacity;
 
   switch (rooms) {
@@ -33,7 +31,7 @@ const getCapacity = (guests, rooms) => {
   return capacity;
 }
 
-const getSimpleStructure = (currentOffer) => {
+export const getSimpleStructure = (currentOffer) => {
   const { author, offer, location, extended } = currentOffer;
   currentOffer = Object.assign({}, author, offer, location, extended);
   currentOffer.time = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
@@ -58,7 +56,7 @@ const renderFeatures = (features, featureElement) => {
   });
 }
 
-const createOffer = (currentOffer) => {
+export const createOffer = (currentOffer) => {
   const popup = document.querySelector('#card').content.querySelector('.popup').cloneNode(true);
   const nodes = Array.from(popup.children);
   const keys = Object.keys(currentOffer);
@@ -90,8 +88,5 @@ const createOffer = (currentOffer) => {
     node.src = value;
 
   });
-  popup.classList.remove('hidden');
   return popup;
 }
-
-export { createOffer, getSimpleStructure };

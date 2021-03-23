@@ -1,7 +1,10 @@
-import { getPins } from './map.js';
+import { showPins, getStructuredOffers, getMarkers } from './map.js';
 import { getData } from './api.js';
-import { COUNT_OF_PINS } from './constant.js';
+import { filterPins } from './filter.js';
 
 getData((offers) => {
-  getPins(offers.slice(0, COUNT_OF_PINS));
+  const structuredOffers = getStructuredOffers(offers);
+  const markers = getMarkers(structuredOffers);
+  showPins(markers);
+  filterPins(structuredOffers, markers)
 });

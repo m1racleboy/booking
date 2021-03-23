@@ -1,7 +1,7 @@
 import { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray } from './util.js';
 import {
   MIN_ELEMENT, COUNT_OF_PINS, MIN_LOCATION_X, MIN_LOCATION_Y,
-  MAX_LOCATION_X, MAX_LOCATION_Y, MAX_PRICE, MAX_COUNT_OF_AVATARS, MAX_COUNT_OF_DECIMAL_NUMBERS, MAX_FEATURES, MAX_PHOTOS, MIN_PRICE
+  MAX_LOCATION_X, MAX_LOCATION_Y, MAX_PRICE, MAX_COUNT_OF_AVATARS, MAX_DECIMAL_NUMBERS, MAX_FEATURES, MAX_PHOTOS, MIN_PRICE
 } from './constant.js'
 
 
@@ -99,8 +99,8 @@ const getOffer = (location) => {
 
 
 const getLocation = () => ({
-  lat: getPoint(MIN_LOCATION_X, MAX_LOCATION_X, MAX_COUNT_OF_DECIMAL_NUMBERS),
-  lng: getPoint(MIN_LOCATION_Y, MAX_LOCATION_Y, MAX_COUNT_OF_DECIMAL_NUMBERS),
+  lat: getPoint(MIN_LOCATION_X, MAX_LOCATION_X, MAX_DECIMAL_NUMBERS),
+  lng: getPoint(MIN_LOCATION_Y, MAX_LOCATION_Y, MAX_DECIMAL_NUMBERS),
 });
 
 const getExtended = (offer) => ({
@@ -108,7 +108,7 @@ const getExtended = (offer) => ({
   capacity: getCapacity(offer.guests, offer.rooms),
 });
 
-const getMockData = () => {
+export const getMockData = () => {
   const mockArray = [];
   for (let i = 0; i < COUNT_OF_PINS; i++) {
     const location = getLocation();
@@ -125,5 +125,3 @@ const getMockData = () => {
   }
   return mockArray;
 };
-
-export { getMockData, MIN_PRICE };
