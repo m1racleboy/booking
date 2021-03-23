@@ -1,26 +1,22 @@
-import { MIN_PRICE } from './constant.js';
+import { MAX_ROOMS, MAX_TITLE_LENGTH, MIN_PRICE, MIN_TITLE_LENGTH, NO_ROOMS } from './constant.js';
 import { success, error, closeModal } from './user-modal.js';
 import { showModal, resetPage } from './util.js';
 import { sendData } from './api.js';
 const typeField = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
-const form = document.querySelector('.ad-form');
-const mapFilters = document.querySelector('.map__filters');
+export const form = document.querySelector('.ad-form');
+export const mapFilters = document.querySelector('.map__filters');
+export const childeNodes = [...mapFilters.children, ...form.children];
+export const addressInput = form.querySelector('#address');
 const resetButton = form.querySelector('.ad-form__reset');
-const childeNodes = [...mapFilters.children, ...form.children];
 const closeErrorButton = error.querySelector('.error__button');
 const checkin = document.querySelector('#timein');
 const checkout = document.querySelector('#timeout');
 const titleInput = form.querySelector('#title');
-const addressInput = form.querySelector('#address');
 const rooms = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
-const MIN_TITLE_LENGTH = 30;
-const MAX_TITLE_LENGTH = 100;
-const MAX_ROOMS = 100;
-const NO_ROOMS = 0;
 
-const changeFormsStates = (node, condition) => {
+export const changeFormsStates = (node, condition) => {
   node.forEach(element => {
     element.disabled = condition;
   });
@@ -141,5 +137,3 @@ form.addEventListener('blur', () => {
   resetButton.removeEventListener('click', resetHandler, true);
   closeErrorButton.removeEventListener('click', closeModalHandler, true);
 });
-
-export { form, addressInput, MIN_PRICE, childeNodes, mapFilters, changeFormsStates };

@@ -1,44 +1,47 @@
-const COUNT_OF_PINS = 10;
+export const COUNT_OF_PINS = 10;
 
-const MIN_ELEMENT = 1;
+export const MIN_ELEMENT = 1;
 
-const MIN_LOCATION_X = 35.65;
-const MAX_LOCATION_X = 35.7;
-const MIN_LOCATION_Y = 139.7;
-const MAX_LOCATION_Y = 139.8;
+export const MIN_LOCATION_X = 35.65;
+export const MAX_LOCATION_X = 35.7;
+export const MIN_LOCATION_Y = 139.7;
+export const MAX_LOCATION_Y = 139.8;
 
-const MIN_PRICE = {
+export const MIN_PRICE = {
   flat: 1000,
   bungalow: 0,
   house: 5000,
   palace: 10000,
 };
-const MAX_PRICE = 1000000;
+export const MAX_PRICE = 1000000;
 
-const MAX_COUNT_OF_AVATARS = 8;
-const MAX_COUNT_OF_DECIMAL_NUMBERS = 5;
-const MAX_FEATURES = 6;
-const MAX_PHOTOS = 3;
+export const MAX_COUNT_OF_AVATARS = 8;
+export const MAX_DECIMAL_NUMBERS = 5;
+export const MAX_FEATURES = 6;
+export const MAX_PHOTOS = 3;
 
-const TOKYO_LATITUDE = 35.6895;
-const TOKYO_LONGITUDE = 139.69171;
-const MAIN_PIN = 52;
-const PIN = 40;
-const START_POINTS = `${TOKYO_LATITUDE}, ${TOKYO_LONGITUDE}`;
-const START_POINTS_OBJECT = {
+export const MIN_TITLE_LENGTH = 30;
+export const MAX_TITLE_LENGTH = 100;
+export const MAX_ROOMS = 100;
+export const NO_ROOMS = 0;
+
+export const TOKYO_LATITUDE = 35.6895;
+export const TOKYO_LONGITUDE = 139.69171;
+export const MAIN_PIN = 52;
+export const PIN = 40;
+export const START_POINTS = `${TOKYO_LATITUDE}, ${TOKYO_LONGITUDE}`;
+export const START_POINTS_OBJECT = {
   lat: TOKYO_LATITUDE,
   lng: TOKYO_LONGITUDE,
 };
+export const ZOOM = 13;
 
-const ZOOM = 13;
+export const MODAL_SHOW_TIME = 5000;
+export const RERENDER_DELAY = 500;
 
-const MODAL_SHOW_TIME = 5000;
+export const ERROR_MESSAGE = 'Не удалось отправить форму. Попробуйте ещё раз';
 
-const ERROR_MESSAGE = 'Не удалось отправить форму. Попробуйте ещё раз';
-
-export {
-  MIN_ELEMENT, COUNT_OF_PINS, MIN_LOCATION_X, MIN_LOCATION_Y,
-  MAX_LOCATION_X, MAX_LOCATION_Y, MAX_PRICE, MAX_COUNT_OF_AVATARS, MAX_COUNT_OF_DECIMAL_NUMBERS,
-  MAX_FEATURES, MAX_PHOTOS, MIN_PRICE, TOKYO_LATITUDE, TOKYO_LONGITUDE, MAIN_PIN, PIN, START_POINTS,
-  START_POINTS_OBJECT, ERROR_MESSAGE, MODAL_SHOW_TIME, ZOOM
-};
+export const PRICES = {
+  low: 10000,
+  high: 50000,
+}

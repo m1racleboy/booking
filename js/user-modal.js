@@ -1,14 +1,19 @@
-const success = document.querySelector('.success');
-const error = document.querySelector('.error');
+export const success = document.querySelector('.success');
+export const error = document.querySelector('.error');
 
-const closeModal = (response) => {
+export const closeModal = (response) => {
   response.classList.add('hidden');
 }
 
-const openModal = (response) => {
+const isEscEvent = (e) => {
+  return e.key === 'Escape' || e.key === 'Esc';
+};
+
+export const openModal = (response) => {
   response.classList.remove('hidden');
+
   document.addEventListener('keydown', (e) => {
-    if (e.code === 'Esc' || e.code === 'Escape') {
+    if (isEscEvent(e)) {
       response.classList.add('hidden');
     }
   });
@@ -19,5 +24,3 @@ const openModal = (response) => {
     }
   });
 }
-
-export { openModal, closeModal, success, error };

@@ -1,6 +1,6 @@
 import { ERROR_MESSAGE } from './constant.js';
 
-const getData = (onSuccess) => {
+export const getData = (onSuccess) => {
   fetch('https://22.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
     .then((offers) => {
@@ -8,7 +8,7 @@ const getData = (onSuccess) => {
     });
 };
 
-const sendData = (onSuccess, onFail, body) => {
+export const sendData = (onSuccess, onFail, body) => {
   fetch(
     'https://22.javascript.pages.academy/keksobooking',
     {
@@ -27,5 +27,3 @@ const sendData = (onSuccess, onFail, body) => {
       onFail(ERROR_MESSAGE);
     });
 };
-
-export { getData, sendData };

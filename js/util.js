@@ -3,7 +3,7 @@ import { openModal, closeModal, success } from './user-modal.js';
 import { refreshMap } from './map.js';
 import { addressInput, form, mapFilters } from './form.js';
 
-const getRandomNumber = (min, max) => {
+export const getRandomNumber = (min, max) => {
   min = +min;
   max = +max;
 
@@ -15,22 +15,22 @@ const getRandomNumber = (min, max) => {
   }
 };
 
-const getRoundNumber = (min, max) => {
+export const getRoundNumber = (min, max) => {
   return Math.round(getRandomNumber(min, max));
 }
 
-const getPoint = (x, y, numberOfSings = 0) => {
+export const getPoint = (x, y, numberOfSings = 0) => {
   let result = getRandomNumber(x, y);
   numberOfSings = +numberOfSings;
   result = numberOfSings >= 0 ? +result.toFixed(numberOfSings) : 0;
   return result;
 };
 
-const getRandomArrayElement = (elements) => {
+export const getRandomArrayElement = (elements) => {
   return elements[getRoundNumber(0, elements.length - 1)];
 };
 
-const getRandomArray = (array, length) => {
+export const getRandomArray = (array, length) => {
   const arrayCopy = [...array];
   for (let i = 0; i < (array.length - length); i++) {
     arrayCopy.splice(getRoundNumber(0, arrayCopy.length), MIN_ELEMENT)
@@ -38,14 +38,14 @@ const getRandomArray = (array, length) => {
   return arrayCopy;
 }
 
-const resetPage = () => {
+export const resetPage = () => {
   form.reset();
   mapFilters.reset();
   addressInput.value = START_POINTS;
   refreshMap();
 }
 
-const showModal = (response) => {
+export const showModal = (response) => {
   if (response === success) {
     openModal(response);
     resetPage();
@@ -59,5 +59,3 @@ const showModal = (response) => {
     closeModal(response);
   }, MODAL_SHOW_TIME);
 }
-
-export { getRoundNumber, getPoint, getRandomArrayElement, getRandomArray, showModal, resetPage };
