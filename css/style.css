@@ -943,17 +943,44 @@ fieldset {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
+.error-data {
+  position: fixed;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+
+  width: 600px;
+  height: 350px;
+
+  padding-top: 150px;
+  overflow: auto;
+  border-radius: 5%;
+
+  text-align: center;
+  vertical-align: middle;
+
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 .success__message,
-.error__message {
+.error__message,
+.error-data__message {
   position: relative;
 
   color: #ffffff;
-  font-size: 50px;
+  font-size: 30px;
   font-weight: 700;
 }
 
 .success__message::before,
-.error__message::before {
+.error__message::before,
+.error-data__message::before {
   content: "";
   position: absolute;
 
@@ -972,11 +999,13 @@ fieldset {
           transform: translateX(-50%);
 }
 
-.error__message::before {
+.error__message::before,
+.error-data__message::before {
   background-image: url("../img/muffin-red.svg");
 }
 
-.error__button {
+.error__button,
+.error-data__button  {
   padding: 10px;
 
   font-size: 22px;
@@ -991,16 +1020,24 @@ fieldset {
   border-radius: 8px;
 }
 
+.error-data__button {
+  width: 100px;
+}
+
 .error__button:hover,
-.error__button:focus {
+.error__button:focus,
+.error-data__button:hover,
+.error-data__button:focus {
   opacity: 0.8;
 }
 
-.error__button:focus {
+.error__button:focus,
+.error-data__button:focus{
   outline: none;
 }
 
-.error__button:active {
+.error__button:active,
+.error-data__button:active {
   outline: none;
   opacity: 0.6;
 }
