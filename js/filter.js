@@ -64,7 +64,6 @@ export const filterPins = (offers, markers) => {
   }
 
   const createFilterChangeHandler = () => {
-    window.myFormData = new FormData(mapFilters);
     let filteredMarkers = [...markers];
 
     return (evt) => {
