@@ -1,6 +1,6 @@
 export const success = document.querySelector('.success');
 export const error = document.querySelector('.error');
-
+export const errorGetData = document.querySelector('.error-data');
 export const closeModal = (response) => {
   response.classList.add('hidden');
 }
