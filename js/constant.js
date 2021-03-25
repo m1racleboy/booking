@@ -37,7 +37,6 @@ export const START_POINTS_OBJECT = {
 export const ZOOM = 13;
 
 export const MODAL_SHOW_TIME = 5000;
-export const FEATURES_COUNT = 6;
 export const RERENDER_DELAY = 500;
 
 export const ERROR_POST_MESSAGE = 'Не удалось отправить форму. Попробуйте ещё раз';
