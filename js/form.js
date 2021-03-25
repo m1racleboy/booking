@@ -16,10 +16,6 @@ const titleInput = form.querySelector('#title');
 const rooms = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
 
-// titleInput.required = false;
-// priceInput.required = false;
-// addressInput.required = false;
-
 export const changeFormState = (node, condition) => {
   node.forEach(element => {
     element.disabled = condition;
