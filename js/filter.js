@@ -1,5 +1,5 @@
 /* global _:readonly */
-import { FEATURES_COUNT, PRICES, RERENDER_DELAY } from './constant.js';
+import { PRICES, RERENDER_DELAY } from './constant.js';
 import { mapFilters } from './form.js';
 import { getMarkers, hidePins, showPins } from './map.js';
 
@@ -27,34 +27,16 @@ export const filterPins = (offers, markers) => {
     }
   });
 
-  const createFilterByCheckboxes = () => {
-    let features = [];
-
-    return (array, target) => {
-      const value = target.value;
-      target.checked ? features.push(value) : features.splice(features.findIndex(item => item === value), 1);
-      const featuresLength = features.length;
-
-      return array.filter(item => {
-        const itemFeaturesLength = item.features.length;
-        if (featuresLength > itemFeaturesLength) {
-          return false;
-        }
-
-        if (itemFeaturesLength === FEATURES_COUNT) {
-          return true;
-        }
-
-        if (featuresLength === 0) {
-          return true;
-        }
-
-        return (new Set([...features, ...item.features])).size === itemFeaturesLength;
-      })
+  const filterByCheckboxes = (array, param) => {
+    const features = [...mapFilters.querySelectorAll('input[type="checkbox"]:checked')];
+    const featuresValues = features.map(feature => feature.value);
+    if (features.length === 0) {
+      return array;
+    }
+    else {
+      return array.filter(offer => offer[param].some(feature => featuresValues.some(value => value === feature)));
     }
   }
-
-  const filterByCheckboxes = createFilterByCheckboxes();
 
   const Filters = {
     result: [],
@@ -74,8 +56,8 @@ export const filterPins = (offers, markers) => {
       this.result = filterByOptions(this.result, 'guests', value);
       return this;
     },
-    byFeatures(target) {
-      this.result = filterByCheckboxes(this.result, target);
+    byFeatures() {
+      this.result = filterByCheckboxes(this.result, 'features');
       return this;
     },
   }
@@ -101,7 +83,7 @@ export const filterPins = (offers, markers) => {
         .byPrice(filterValues.price)
         .byRooms(filterValues.rooms)
         .byGuests(filterValues.guests)
-        .byFeatures(evt.target)
+        .byFeatures()
 
       filteredMarkers = getMarkers(Filters.result);
       showPins(filteredMarkers);
