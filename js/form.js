@@ -1,43 +1,58 @@
 import { MAX_ROOMS, MAX_TITLE_LENGTH, MIN_PRICE, MIN_TITLE_LENGTH, NO_ROOMS } from './constant.js';
-import { success, error, closeModal } from './user-modal.js';
+import { success, error } from './user-modal.js';
 import { showModal, resetPage } from './util.js';
 import { sendData } from './api.js';
-const typeField = document.querySelector('#type');
+const typeInput = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
 export const form = document.querySelector('.ad-form');
 export const mapFilters = document.querySelector('.map__filters');
-export const childeNodes = [...mapFilters.children, ...form.children];
+export const childeForm = [...form.children];
+export const childeFilter = [...mapFilters.children];
 export const addressInput = form.querySelector('#address');
 const resetButton = form.querySelector('.ad-form__reset');
-const closeErrorButton = error.querySelector('.error__button');
 const checkin = document.querySelector('#timein');
 const checkout = document.querySelector('#timeout');
 const titleInput = form.querySelector('#title');
 const rooms = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
 
-export const changeFormsStates = (node, condition) => {
+// titleInput.required = false;
+// priceInput.required = false;
+// addressInput.required = false;
+
+export const changeFormState = (node, condition) => {
   node.forEach(element => {
     element.disabled = condition;
   });
 
   if (condition) {
     form.classList.add('ad-form--disabled');
-    mapFilters.classList.add('map__filters--disabled');
   }
   else {
     form.classList.remove('ad-form--disabled');
+  }
+}
+
+export const changeFilterState = (node, condition) => {
+  node.forEach(element => {
+    element.disabled = condition;
+  });
+
+  if (condition) {
+    mapFilters.classList.add('map__filters--disabled');
+  }
+  else {
     mapFilters.classList.remove('map__filters--disabled');
   }
 }
 
-const typeFieldHandler = (targetValue) => {
+const typeInputHandler = (targetValue) => {
   const price = MIN_PRICE[targetValue];
   priceInput.min = price;
   priceInput.placeholder = price;
 };
 
-const timeFieldHandler = (targetValue) => {
+const timeInputHandler = (targetValue) => {
   checkout.value = targetValue;
   checkin.value = targetValue;
 }
@@ -73,14 +88,14 @@ const changeHandler = (e) => {
   const targetValue = targetInput.value;
 
   switch (targetInput) {
-    case typeField:
-      typeFieldHandler(targetValue);
+    case typeInput:
+      typeInputHandler(targetValue);
       break;
     case checkin:
-      timeFieldHandler(targetValue);
+      timeInputHandler(targetValue);
       break;
     case checkout:
-      timeFieldHandler(targetValue);
+      timeInputHandler(targetValue);
       break;
     case rooms:
       capacitySelectOptionsHandler(targetValue);
@@ -89,7 +104,7 @@ const changeHandler = (e) => {
   }
 }
 
-const inputHandler = () => {
+const titleInputHandler = () => {
   const valueLength = titleInput.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
@@ -99,8 +114,6 @@ const inputHandler = () => {
   } else {
     titleInput.setCustomValidity('');
   }
-
-  titleInput.reportValidity();
 }
 
 const resetHandler = (e) => {
@@ -110,7 +123,6 @@ const resetHandler = (e) => {
 
 const sendOfferFormSubmit = (e) => {
   e.preventDefault();
-
   sendData(
     () => showModal(success),
     () => showModal(error),
@@ -118,22 +130,16 @@ const sendOfferFormSubmit = (e) => {
   );
 }
 
-const closeModalHandler = () => {
-  closeModal(error);
-}
-
 form.addEventListener('focus', () => {
   form.addEventListener('change', changeHandler);
-  titleInput.addEventListener('input', inputHandler);
   form.addEventListener('submit', sendOfferFormSubmit);
+  titleInput.addEventListener('input', titleInputHandler);
   resetButton.addEventListener('click', resetHandler);
-  closeErrorButton.addEventListener('click', closeModalHandler);
 }, true);
 
 form.addEventListener('blur', () => {
   form.removeEventListener('change', changeHandler, true);
-  titleInput.removeEventListener('input', inputHandler, true);
   form.removeEventListener('submit', sendOfferFormSubmit, true);
+  titleInput.removeEventListener('input', titleInputHandler, true);
   resetButton.removeEventListener('click', resetHandler, true);
-  closeErrorButton.removeEventListener('click', closeModalHandler, true);
 });

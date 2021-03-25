@@ -922,7 +922,8 @@ fieldset {
  */
 
 .success,
-.error {
+.error,
+.error-data {
   position: fixed;
   top: 0;
   left: 0;
@@ -943,38 +944,13 @@ fieldset {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-.error-data {
-  position: fixed;
-  margin: auto;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 999;
-
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-
-  width: 600px;
-  height: 350px;
-
-  padding-top: 150px;
-  overflow: auto;
-  border-radius: 5%;
-
-  text-align: center;
-  vertical-align: middle;
-
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
 .success__message,
 .error__message,
 .error-data__message {
   position: relative;
 
   color: #ffffff;
-  font-size: 30px;
+  font-size: 50px;
   font-weight: 700;
 }
 
@@ -1021,7 +997,7 @@ fieldset {
 }
 
 .error-data__button {
-  width: 100px;
+  width: 200px;
 }
 
 .error__button:hover,

@@ -37,9 +37,11 @@ export const START_POINTS_OBJECT = {
 export const ZOOM = 13;
 
 export const MODAL_SHOW_TIME = 5000;
+export const FEATURES_COUNT = 6;
 export const RERENDER_DELAY = 500;
 
-export const ERROR_MESSAGE = 'Не удалось отправить форму. Попробуйте ещё раз';
+export const ERROR_POST_MESSAGE = 'Не удалось отправить форму. Попробуйте ещё раз';
+export const ERROR_GET_MESSAGE = 'Ошибка загрузки данных с сервера!';
 
 export const PRICES = {
   low: 10000,
