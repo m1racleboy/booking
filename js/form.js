@@ -42,18 +42,18 @@ export const changeFilterState = (node, condition) => {
   }
 }
 
-const typeInputHandler = (targetValue) => {
+const changeTypeHandler = (targetValue) => {
   const price = MIN_PRICE[targetValue];
   priceInput.min = price;
   priceInput.placeholder = price;
 };
 
-const timeInputHandler = (targetValue) => {
+const changeTimeHandler = (targetValue) => {
   checkout.value = targetValue;
   checkin.value = targetValue;
 }
 
-const optionsHandler = (options) => {
+const getOptionsHandler = (options) => {
   let memoOptions = [];
 
   return (targetValue) => {
@@ -71,12 +71,12 @@ const optionsHandler = (options) => {
   }
 }
 
-const capacityHandler = optionsHandler([...capacity]);
-capacityHandler(rooms.value);
+const getCapacityHandler = getOptionsHandler([...capacity]);
+getCapacityHandler(rooms.value);
 
-const capacitySelectOptionsHandler = (targetValue) => {
+const selectCapacityHandler = (targetValue) => {
   capacity.value = +targetValue === MAX_ROOMS ? NO_ROOMS : targetValue;
-  capacityHandler(targetValue);
+  getCapacityHandler(targetValue);
 }
 
 const changeHandler = (e) => {
@@ -85,22 +85,22 @@ const changeHandler = (e) => {
 
   switch (targetInput) {
     case typeInput:
-      typeInputHandler(targetValue);
+      changeTypeHandler(targetValue);
       break;
     case checkin:
-      timeInputHandler(targetValue);
+      changeTimeHandler(targetValue);
       break;
     case checkout:
-      timeInputHandler(targetValue);
+      changeTimeHandler(targetValue);
       break;
     case rooms:
-      capacitySelectOptionsHandler(targetValue);
+      selectCapacityHandler(targetValue);
       break;
     default: break;
   }
 }
 
-const titleInputHandler = () => {
+const checkTitleInputHandler = () => {
   const valueLength = titleInput.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
@@ -110,6 +110,7 @@ const titleInputHandler = () => {
   } else {
     titleInput.setCustomValidity('');
   }
+  titleInput.reportValidity();
 }
 
 const resetHandler = (e) => {
@@ -129,13 +130,13 @@ const sendOfferFormSubmit = (e) => {
 form.addEventListener('focus', () => {
   form.addEventListener('change', changeHandler);
   form.addEventListener('submit', sendOfferFormSubmit);
-  titleInput.addEventListener('input', titleInputHandler);
+  titleInput.addEventListener('input', checkTitleInputHandler);
   resetButton.addEventListener('click', resetHandler);
 }, true);
 
 form.addEventListener('blur', () => {
   form.removeEventListener('change', changeHandler, true);
   form.removeEventListener('submit', sendOfferFormSubmit, true);
-  titleInput.removeEventListener('input', titleInputHandler, true);
+  titleInput.removeEventListener('input', checkTitleInputHandler, true);
   resetButton.removeEventListener('click', resetHandler, true);
 });
