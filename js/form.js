@@ -1,6 +1,6 @@
 import { MAX_ROOMS, MAX_TITLE_LENGTH, MIN_PRICE, MIN_TITLE_LENGTH, NO_ROOMS } from './constant.js';
 import { success, error } from './user-modal.js';
-import { showModal, resetPage } from './util.js';
+import { showModal, resetPage, isPicture } from './util.js';
 import { sendData } from './api.js';
 const typeInput = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
@@ -15,6 +15,37 @@ const checkout = document.querySelector('#timeout');
 const titleInput = form.querySelector('#title');
 const rooms = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
+
+const avatarInput = document.querySelector('#avatar');
+export const avatarPreview = form.querySelector('.ad-form-header__preview img');
+const housingImageInput = form.querySelector('#images');
+export const housingImagePreview = form.querySelector('.ad-form__photo');
+
+avatarInput.addEventListener('change', () => {
+  const file = avatarInput.files[0];
+  const fileName = file.name;
+  if (isPicture(fileName)) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      avatarPreview.src = reader.result;
+    })
+    reader.readAsDataURL(file);
+  }
+});
+
+housingImageInput.addEventListener('change', () => {
+  const file = housingImageInput.files[0];
+  const fileName = file.name;
+  if (isPicture(fileName)) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      const image = reader.result;
+      housingImagePreview.insertAdjacentHTML('beforeend',
+        `<img src="${image}" alt="Фотография жилья" width="100%" height="100%">`);
+    });
+    reader.readAsDataURL(file);
+  }
+});
 
 export const changeFormState = (node, condition) => {
   node.forEach(element => {
