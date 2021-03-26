@@ -12,7 +12,9 @@ export const filterPins = (offers, markers) => {
     }
   };
 
-  const filterByOptions = (array, param, value) => value === 'any' ? array : array.filter(offer => offer[param] === value);
+  const filterByType = (array, param, value) => value === 'any' ? array : array.filter(offer => offer[param] === value);
+
+  const filterByCapacity = (array, param, value) => value === 'any' ? array : array.filter(offer => offer[param] === +value);
 
   const filterByPrice = (array, param, value) => value === 'any' ? array : array.filter(offer => {
     switch (value) {
@@ -41,7 +43,7 @@ export const filterPins = (offers, markers) => {
   const Filters = {
     result: [],
     byType(value) {
-      this.result = filterByOptions(this.result, 'type', value);
+      this.result = filterByType(this.result, 'type', value);
       return this;
     },
     byPrice(value) {
@@ -49,11 +51,11 @@ export const filterPins = (offers, markers) => {
       return this;
     },
     byRooms(value) {
-      this.result = filterByOptions(this.result, 'rooms', value);
+      this.result = filterByCapacity(this.result, 'rooms', value);
       return this;
     },
     byGuests(value) {
-      this.result = filterByOptions(this.result, 'guests', value);
+      this.result = filterByCapacity(this.result, 'guests', value);
       return this;
     },
     byFeatures() {

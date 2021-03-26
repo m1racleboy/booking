@@ -76,7 +76,7 @@ export const refreshMap = () => {
 export const getStructuredOffers = offers => offers.map(item => getSimpleStructure(item));
 
 export const getMarkers = (pins) => {
-  const markers = pins.slice(0, COUNT_OF_PINS).map(pin => L.marker(
+  return pins.slice(0, COUNT_OF_PINS).map(pin => L.marker(
     {
       lat: pin.lat,
       lng: pin.lng,
@@ -90,7 +90,6 @@ export const getMarkers = (pins) => {
       keepInView: true,
     },
   ))
-  return markers;
 }
 
 export const showPins = (markers) => markers.forEach(marker => marker.addTo(map));
