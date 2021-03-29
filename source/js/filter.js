@@ -1,4 +1,4 @@
-/* global _:readonly */
+import debounce from 'lodash/debounce';
 import { PRICES, RERENDER_DELAY } from './constant.js';
 import { mapFilters } from './form.js';
 import { getMarkers, hidePins, showPins } from './map.js';
@@ -92,5 +92,5 @@ export const filterPins = (offers, markers) => {
     }
   }
 
-  mapFilters.addEventListener('change', _.debounce(createFilterChangeHandler(), RERENDER_DELAY), true);
+  mapFilters.addEventListener('change', debounce(createFilterChangeHandler(), RERENDER_DELAY), true);
 }

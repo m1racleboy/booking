@@ -1,4 +1,5 @@
-/* global L:readonly */
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { addressInput, childeFilter, childeForm, changeFormState, changeFilterState } from './form.js';
 import { createOffer, getSimpleStructure } from './create-card.js';
 import {
@@ -28,7 +29,7 @@ L.tileLayer(
 ).addTo(map);
 
 const mainPinIcon = L.icon({
-  iconUrl: '../img/main-pin.svg',
+  iconUrl: './img/main-pin.svg',
   iconSize: [MAIN_PIN, MAIN_PIN],
   iconAnchor: [MAIN_PIN / 2, MAIN_PIN],
 });
@@ -42,7 +43,7 @@ const mainPinMarker = L.marker(
 );
 
 const icon = L.icon({
-  iconUrl: '../img/pin.svg',
+  iconUrl: './img/pin.svg',
   iconSize: [PIN, PIN],
   iconAnchor: [PIN / 2, PIN],
 });
