@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { addressInput, childeFilter, childeForm, changeFormState, changeFilterState } from './form.js';
+import { addressInput, childeFilter, childeForm, changePageState, form, mapFilters } from './form.js';
 import { createOffer, getSimpleStructure } from './create-card.js';
 import {
   MAX_DECIMAL_NUMBERS, MAIN_PIN, PIN, START_POINTS, START_POINTS_OBJECT,
@@ -10,13 +10,13 @@ import { getData } from './api.js';
 import { filterPins } from './filter.js';
 import { errorGetData, openModal } from './user-modal.js';
 
-changeFormState(childeForm, true);
-changeFilterState(childeFilter, true);
+changePageState(childeForm, form, true);
+changePageState(childeFilter, mapFilters, true);
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    changeFormState(childeForm, false);
-    changeFilterState(childeFilter, false);
+    changePageState(childeForm, form, false);
+    changePageState(childeFilter, mapFilters, false);
     addressInput.value = START_POINTS;
   })
   .setView(START_POINTS_OBJECT, ZOOM);
@@ -69,7 +69,7 @@ export const refreshMap = () => {
     },
     () => {
       openModal(errorGetData);
-      changeFilterState(childeFilter, true);
+      changePageState(childeFilter, mapFilters, true);
     },
   );
 }

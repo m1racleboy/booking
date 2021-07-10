@@ -1,5 +1,5 @@
 import { showPins, getStructuredOffers, getMarkers } from './map.js';
-import { childeFilter, changeFilterState } from './form.js';
+import { childeFilter, changePageState, mapFilters } from './form.js';
 import { getData } from './api.js';
 import { filterPins } from './filter.js';
 import { errorGetData, openModal } from './user-modal.js';
@@ -13,6 +13,6 @@ getData(
   },
   () => {
     openModal(errorGetData);
-    changeFilterState(childeFilter, true);
+    changePageState(childeFilter, mapFilters, true);
   },
 );

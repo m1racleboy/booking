@@ -2,19 +2,20 @@ import { MAX_ROOMS, MAX_TITLE_LENGTH, MIN_PRICE, MIN_TITLE_LENGTH, NO_ROOMS } fr
 import { success, error } from './user-modal.js';
 import { showModal, resetPage, isPicture } from './util.js';
 import { sendData } from './api.js';
-const typeInput = document.querySelector('#type');
-const priceInput = document.querySelector('#price');
+
 export const form = document.querySelector('.ad-form');
 export const mapFilters = document.querySelector('.map__filters');
 export const childeForm = [...form.children];
 export const childeFilter = [...mapFilters.children];
 export const addressInput = form.querySelector('#address');
-const resetButton = form.querySelector('.ad-form__reset');
+const typeInput = document.querySelector('#type');
+const priceInput = document.querySelector('#price');
 const checkin = document.querySelector('#timein');
 const checkout = document.querySelector('#timeout');
 const titleInput = form.querySelector('#title');
 const rooms = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
+const resetButton = form.querySelector('.ad-form__reset');
 
 const avatarInput = document.querySelector('#avatar');
 export const avatarPreview = form.querySelector('.ad-form-header__preview img');
@@ -47,31 +48,16 @@ housingImageInput.addEventListener('change', () => {
   }
 });
 
-export const changeFormState = (node, condition) => {
-  node.forEach(element => {
-    element.disabled = condition;
-  });
+export const changePageState = (nodes, node, condition) => {
+  nodes.forEach((element) => element.disabled = condition);
 
   if (condition) {
-    form.classList.add('ad-form--disabled');
+    node.classList.add(`${node.className}--disabled`);
   }
   else {
-    form.classList.remove('ad-form--disabled');
+    node.classList.remove(`${node.className}--disabled`);
   }
-}
-
-export const changeFilterState = (node, condition) => {
-  node.forEach(element => {
-    element.disabled = condition;
-  });
-
-  if (condition) {
-    mapFilters.classList.add('map__filters--disabled');
-  }
-  else {
-    mapFilters.classList.remove('map__filters--disabled');
-  }
-}
+};
 
 const changeTypeHandler = (targetValue) => {
   const price = MIN_PRICE[targetValue];
