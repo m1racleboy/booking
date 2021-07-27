@@ -1,5 +1,5 @@
-import debounce from 'lodash/debounce';
-import { PRICES, RERENDER_DELAY } from './constant.js';
+import { debounce } from './utils/debounce.js';
+import { PRICES, DEBOUNCE_DELAY } from './const.js';
 import { mapFilters } from './form.js';
 import { getMarkers, hidePins, showPins } from './map.js';
 
@@ -9,14 +9,14 @@ export const filterPins = (offers, markers) => {
     return {
       param: target.name.replace(/housing-/, ''),
       value: target.value,
-    }
+    };
   };
 
-  const filterByType = (array, param, value) => value === 'any' ? array : array.filter(offer => offer[param] === value);
+  const filterByType = (array, param, value) => value === 'any' ? array : array.filter((offer) => offer[param] === value);
 
-  const filterByCapacity = (array, param, value) => value === 'any' ? array : array.filter(offer => offer[param] === +value);
+  const filterByCapacity = (array, param, value) => value === 'any' ? array : array.filter((offer) => offer[param] === +value);
 
-  const filterByPrice = (array, param, value) => value === 'any' ? array : array.filter(offer => {
+  const filterByPrice = (array, param, value) => value === 'any' ? array : array.filter((offer) => {
     switch (value) {
       case 'low':
         return +offer[param] < PRICES.low;
@@ -25,20 +25,20 @@ export const filterPins = (offers, markers) => {
       case 'middle':
         return +offer[param] <= PRICES.high && +offer[param] >= PRICES.low;
       default:
-        return;
+        break;
     }
   });
 
   const filterByCheckboxes = (array, param) => {
     const features = [...mapFilters.querySelectorAll('input[type="checkbox"]:checked')];
-    const featuresValues = features.map(feature => feature.value);
+    const featuresValues = features.map((feature) => feature.value);
+
     if (features.length === 0) {
       return array;
     }
-    else {
-      return array.filter(offer => offer[param].some(feature => featuresValues.some(value => value === feature)));
-    }
-  }
+
+    return array.filter((offer) => offer[param].some((feature) => featuresValues.some((value) => value === feature)));
+  };
 
   const Filters = {
     result: [],
@@ -62,7 +62,7 @@ export const filterPins = (offers, markers) => {
       this.result = filterByCheckboxes(this.result, 'features');
       return this;
     },
-  }
+  };
 
 
   const createFilterChangeHandler = () => {
@@ -72,7 +72,7 @@ export const filterPins = (offers, markers) => {
       price: 'any',
       rooms: 'any',
       guests: 'any',
-    }
+    };
 
     return (evt) => {
       const { param, value } = getFilterParam(evt);
@@ -85,12 +85,12 @@ export const filterPins = (offers, markers) => {
         .byPrice(filterValues.price)
         .byRooms(filterValues.rooms)
         .byGuests(filterValues.guests)
-        .byFeatures()
+        .byFeatures();
 
       filteredMarkers = getMarkers(Filters.result);
       showPins(filteredMarkers);
-    }
-  }
+    };
+  };
 
-  mapFilters.addEventListener('change', debounce(createFilterChangeHandler(), RERENDER_DELAY), true);
-}
+  mapFilters.addEventListener('change', debounce(createFilterChangeHandler(), DEBOUNCE_DELAY), true);
+};

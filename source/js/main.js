@@ -1,15 +1,14 @@
-import { showPins, getStructuredOffers, getMarkers } from './map.js';
-import { childeFilter, changePageState, mapFilters } from './form.js';
-import { getData } from './api.js';
+import { getData } from './api/api.js';
 import { filterPins } from './filter.js';
+import { changePageState, childeFilter, mapFilters } from './form.js';
+import { getMarkers, showPins } from './map.js';
 import { errorGetData, openModal } from './user-modal.js';
 
 getData(
-  (offers) => {
-    const structuredOffers = getStructuredOffers(offers);
-    const markers = getMarkers(structuredOffers);
+  (data) => {
+    const markers = getMarkers(data);
     showPins(markers);
-    filterPins(structuredOffers, markers);
+    filterPins(data, markers);
   },
   () => {
     openModal(errorGetData);

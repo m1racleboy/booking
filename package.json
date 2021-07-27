@@ -22,16 +22,14 @@
     "webpack-cli": "4.5.0"
   },
   "license": "MIT",
-  "dependencies": {
-    "leaflet": "1.7.1",
-    "lodash": "4.17.21"
-  },
+  "dependencies": {},
   "scripts": {
     "build": "webpack --mode production",
     "start": "browser-sync start --server \"build/\" --no-ui --files \"source/**/*.js\"",
-    "test": "eslint source/js/"
+    "test": "eslint js/"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": "14.x",
+    "npm": "6.x"
   }
 }
